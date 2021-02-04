@@ -34,7 +34,7 @@ basic.forever(function () {
 })
 basic.forever(function () {
     comment.comment("This loop controls the circular lights")
-    circularLightTiming = 2000
+    circularLightTiming = 500
     if (consoleState == ConsoleStates.Starting) {
         rotateLEDs = 0
         strip = neopixel.create(DigitalPin.P0, 12, NeoPixelMode.RGB)
@@ -43,19 +43,24 @@ basic.forever(function () {
         strip.showColor(neopixel.colors(NeoPixelColors.Green))
         strip.show()
     } else if (consoleState == ConsoleStates.Normal) {
+        rotateLEDs = 0
         strip.setBrightness(30)
         strip.showColor(neopixel.colors(NeoPixelColors.Green))
         strip.show()
     } else if (consoleState == ConsoleStates.VideoPlaying) {
+        rotateLEDs = 0
         strip.setBrightness(100)
         strip.showColor(neopixel.colors(NeoPixelColors.Indigo))
         strip.show()
     } else if (consoleState == ConsoleStates.YellowAlert) {
-        strip.showColor(neopixel.colors(NeoPixelColors.Black))
-        half.setBrightness(100)
-        half.showColor(neopixel.colors(NeoPixelColors.Yellow))
-        half.show()
+        if (rotateLEDs == 1) {
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
+            half.setBrightness(100)
+            half.showColor(neopixel.colors(NeoPixelColors.Yellow))
+            half.show()
+        }
         strip.rotate(1)
+        rotateLEDs = 0
         circularLightTiming = 50
     } else if (consoleState == ConsoleStates.RedAlert) {
         strip.showColor(neopixel.colors(NeoPixelColors.Black))
