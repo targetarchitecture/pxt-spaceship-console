@@ -30,7 +30,7 @@ let keyA = "qdDjMxAz"
 let keyB = "LvQPRk6u"
 RainbowSparkleUnicorn.IoT.connectToInterWeb(
 "152 2.4GHz",
-"Network Password",
+"derwenthorpe",
 "targetarchitecture.cloud.shiftr.io",
 "targetarchitecture",
 "" + keyA + keyB,
