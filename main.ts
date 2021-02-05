@@ -26,6 +26,16 @@ RainbowSparkleUnicorn.printReceivedMessages()
 RainbowSparkleUnicorn.Light.turnAllOn()
 RainbowSparkleUnicorn.Sound.setVolume(10)
 RainbowSparkleUnicorn.Sound.playTrack(2)
+let keyA = "qdDjMxAz"
+let keyB = "LvQPRk6u"
+RainbowSparkleUnicorn.IoT.connectToInterWeb(
+"152 2.4GHz",
+"Network Password",
+"targetarchitecture.cloud.shiftr.io",
+"targetarchitecture",
+"" + keyA + keyB,
+"Spaceship Console"
+)
 consoleState = ConsoleStates.Normal
 basic.forever(function () {
     comment.comment("This loop controls the circular lights")
