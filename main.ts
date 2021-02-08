@@ -1,5 +1,7 @@
 control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
+    // Pink Right Light
     RainbowSparkleUnicorn.Light.blink(lightPins.P8, 500, 500)
+    // Pink Left Light
     RainbowSparkleUnicorn.Light.blink(lightPins.P9, 500, 500)
     keyA = "qdDjMxAz"
     keyB = "LvQPRk6u"
@@ -21,6 +23,17 @@ RainbowSparkleUnicorn.Sound.playTrack(1)
 input.onButtonPressed(Button.A, function () {
     consoleState = ConsoleStates.VideoPlaying
 })
+function testLights () {
+    RainbowSparkleUnicorn.Light.turnAllOff()
+    // if (index == 0) {
+    // RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
+    // } else if (consoleState == ConsoleStates.VideoPlaying) {
+    for (let index = 0; index <= 15; index++) {
+        RainbowSparkleUnicorn.Light.turnOn(index)
+basic.showNumber(index)
+        basic.pause(1000)
+    }
+}
 input.onButtonPressed(Button.B, function () {
     consoleState = ConsoleStates.Normal
 })
@@ -41,19 +54,17 @@ strip.show()
 RainbowSparkleUnicorn.start()
 RainbowSparkleUnicorn.printDebugMessages()
 RainbowSparkleUnicorn.printReceivedMessages()
-RainbowSparkleUnicorn.Light.turnAllOn()
-RainbowSparkleUnicorn.Sound.setVolume(10)
+RainbowSparkleUnicorn.Light.turnAllOff()
+RainbowSparkleUnicorn.Sound.setVolume(2)
 RainbowSparkleUnicorn.Sound.playTrack(2)
 let horizonLevelAngle = 110
 RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
+testLights()
 consoleState = ConsoleStates.Normal
 control.raiseEvent(
 5550,
 EventBusValue.MICROBIT_EVT_ANY
 )
-basic.forever(function () {
-	
-})
 basic.forever(function () {
     comment.comment("This loop controls the gauge")
     if (consoleState == ConsoleStates.Normal) {
