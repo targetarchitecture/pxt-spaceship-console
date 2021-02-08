@@ -1,3 +1,19 @@
+control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
+    RainbowSparkleUnicorn.Light.blink(lightPins.P8, 500, 500)
+    RainbowSparkleUnicorn.Light.blink(lightPins.P9, 500, 500)
+    keyA = "qdDjMxAz"
+    keyB = "LvQPRk6u"
+    RainbowSparkleUnicorn.IoT.connectToInterWeb(
+    "152 2.4GHz",
+    "derwenthorpe",
+    "targetarchitecture.cloud.shiftr.io",
+    "targetarchitecture",
+    "" + keyA + keyB,
+    "Spaceship Console"
+    )
+    RainbowSparkleUnicorn.Light.turnOff(lightPins.P8)
+    RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
+})
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P2, function () {
     consoleState = ConsoleStates.YellowAlert
 RainbowSparkleUnicorn.Sound.playTrack(1)
@@ -12,6 +28,8 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     consoleState = ConsoleStates.RedAlert
 })
 let circularLightLoopPauseMs = 0
+let keyB = ""
+let keyA = ""
 enum ConsoleStates {Starting =0  , Normal=1, VideoPlaying=2, YellowAlert=3, RedAlert=4 }
 let stateInCircularLightLoop = ConsoleStates.Starting
 let consoleState = ConsoleStates.Starting
@@ -26,17 +44,26 @@ RainbowSparkleUnicorn.printReceivedMessages()
 RainbowSparkleUnicorn.Light.turnAllOn()
 RainbowSparkleUnicorn.Sound.setVolume(10)
 RainbowSparkleUnicorn.Sound.playTrack(2)
-let keyA = "qdDjMxAz"
-let keyB = "LvQPRk6u"
-RainbowSparkleUnicorn.IoT.connectToInterWeb(
-"152 2.4GHz",
-"derwenthorpe",
-"targetarchitecture.cloud.shiftr.io",
-"targetarchitecture",
-"" + keyA + keyB,
-"Spaceship Console"
-)
+let horizonLevelAngle = 110
+RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
 consoleState = ConsoleStates.Normal
+control.raiseEvent(
+5550,
+EventBusValue.MICROBIT_EVT_ANY
+)
+basic.forever(function () {
+	
+})
+basic.forever(function () {
+    comment.comment("This loop controls the gauge")
+    if (consoleState == ConsoleStates.Normal) {
+        RainbowSparkleUnicorn.Controls.dial1(randint(0, 30))
+        basic.pause(1000)
+    } else {
+        RainbowSparkleUnicorn.Controls.dial1(0)
+        basic.pause(2000)
+    }
+})
 basic.forever(function () {
     comment.comment("This loop controls the circular lights")
     circularLightLoopPauseMs = 1000
@@ -85,14 +112,4 @@ basic.forever(function () {
     stateInCircularLightLoop = consoleState
     comment.comment("pause for how long...")
     basic.pause(circularLightLoopPauseMs)
-})
-basic.forever(function () {
-    comment.comment("This loop controls the gauge")
-    if (consoleState == ConsoleStates.Normal) {
-        RainbowSparkleUnicorn.Controls.dial1(randint(0, 30))
-        basic.pause(1000)
-    } else {
-        RainbowSparkleUnicorn.Controls.dial1(0)
-        basic.pause(2000)
-    }
 })
