@@ -23,17 +23,7 @@ RainbowSparkleUnicorn.Sound.playTrack(1)
 input.onButtonPressed(Button.A, function () {
     consoleState = ConsoleStates.VideoPlaying
 })
-function testLights () {
-    RainbowSparkleUnicorn.Light.turnAllOff()
-    // if (index == 0) {
-    // RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
-    // } else if (consoleState == ConsoleStates.VideoPlaying) {
-    for (let index = 0; index <= 15; index++) {
-        RainbowSparkleUnicorn.Light.turnOn(index)
-basic.showNumber(index)
-        basic.pause(1000)
-    }
-}
+
 input.onButtonPressed(Button.B, function () {
     consoleState = ConsoleStates.Normal
 })
@@ -59,7 +49,7 @@ RainbowSparkleUnicorn.Sound.setVolume(2)
 RainbowSparkleUnicorn.Sound.playTrack(2)
 let horizonLevelAngle = 110
 RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
-testLights()
+
 consoleState = ConsoleStates.Normal
 control.raiseEvent(
 5550,
