@@ -107,10 +107,8 @@ basic.forever(function () {
         basic.pause(2500)
     } else if (consoleState == ConsoleStates.Normal) {
         horizonTiming = 20
-        serial.writeLine("moveServoLinear")
         RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
-        serial.writeLine("moveServoLinear")
         RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
     }
