@@ -16,6 +16,7 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     IoTConnected = 1
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P8)
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
+    sortOutFuelLights()
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P2, function () {
     consoleState = ConsoleStates.YellowAlert
@@ -25,43 +26,36 @@ input.onButtonPressed(Button.A, function () {
     consoleState = ConsoleStates.VideoPlaying
 })
 RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P4, function () {
-    leftFuelTank = 0
-    rightFuelTank = 0
-    if (IoTConnected == 1) {
-        RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
-    }
+    sortOutFuelLights()
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P5, function () {
-    leftFuelTank = 0
-    rightFuelTank = 1
-    if (IoTConnected == 1) {
-        RainbowSparkleUnicorn.Light.turnOn(lightPins.P9)
-    }
+    sortOutFuelLights()
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P4, function () {
-    leftFuelTank = 1
-    rightFuelTank = 0
-    if (IoTConnected == 1) {
-        RainbowSparkleUnicorn.Light.turnOn(lightPins.P8)
-    }
+    sortOutFuelLights()
 })
 input.onButtonPressed(Button.B, function () {
     consoleState = ConsoleStates.Normal
 })
+function sortOutFuelLights () {
+    basic.clearScreen()
+    RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
+    RainbowSparkleUnicorn.Light.turnOff(lightPins.P8)
+    if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P4) == 1) {
+        RainbowSparkleUnicorn.Light.turnOn(lightPins.P9)
+    }
+    if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P5) == 1) {
+        RainbowSparkleUnicorn.Light.turnOn(lightPins.P8)
+    }
+}
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     consoleState = ConsoleStates.RedAlert
 })
 RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P5, function () {
-    leftFuelTank = 0
-    rightFuelTank = 0
-    if (IoTConnected == 1) {
-        RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
-    }
+    sortOutFuelLights()
 })
-let circularLightLoopPauseMs = 0
 let horizonTiming = 0
-let rightFuelTank = 0
-let leftFuelTank = 0
+let circularLightLoopPauseMs = 0
 let keyB = ""
 let keyA = ""
 let IoTConnected = 0
@@ -79,8 +73,6 @@ RainbowSparkleUnicorn.printReceivedMessages()
 RainbowSparkleUnicorn.Light.turnAllOff()
 // This is the big red button
 RainbowSparkleUnicorn.Light.turnOn(lightPins.P15)
-sortOutFuelLights();
-
 RainbowSparkleUnicorn.Sound.setVolume(2)
 RainbowSparkleUnicorn.Sound.playTrack(2)
 let horizonLevelAngle = 110
@@ -91,35 +83,6 @@ control.raiseEvent(
 EventBusValue.MICROBIT_EVT_ANY
 )
 consoleState = ConsoleStates.Normal
-basic.forever(function () {
-    comment.comment("This loop controls the artificial horizon")
-    if (consoleState == ConsoleStates.Starting) {
-        serial.writeLine("This loop controls the artificial horizon")
-        horizonLevelAngle = 110
-        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
-        basic.pause(500)
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle, horizonLevelAngle - 30, 2)
-        basic.pause(2500)
-    } else if (consoleState == ConsoleStates.Normal) {
-        horizonTiming = 20
-        serial.writeLine("moveServoLinear")
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-        serial.writeLine("moveServoLinear")
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-    }
-})
-basic.forever(function () {
-    comment.comment("This loop controls the gauge")
-    if (consoleState == ConsoleStates.Normal) {
-        RainbowSparkleUnicorn.Controls.dial1(randint(0, 30))
-        basic.pause(1000)
-    } else {
-        RainbowSparkleUnicorn.Controls.dial1(0)
-        basic.pause(2000)
-    }
-})
 basic.forever(function () {
     comment.comment("This loop controls the circular lights")
     circularLightLoopPauseMs = 1000
@@ -169,27 +132,32 @@ basic.forever(function () {
     comment.comment("pause for how long...")
     basic.pause(circularLightLoopPauseMs)
 })
-
-RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P4, function () {
-    sortOutFuelLights()
-})
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P5, function () {
-    sortOutFuelLights()
-})
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P4, function () {
-    sortOutFuelLights()
-})
-function sortOutFuelLights () {
-    basic.clearScreen()
-    RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
-    RainbowSparkleUnicorn.Light.turnOff(lightPins.P8)
-    if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P4) == 1) {
-        RainbowSparkleUnicorn.Light.turnOn(lightPins.P9)
+basic.forever(function () {
+    comment.comment("This loop controls the artificial horizon")
+    if (consoleState == ConsoleStates.Starting) {
+        serial.writeLine("This loop controls the artificial horizon")
+        horizonLevelAngle = 110
+        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
+        basic.pause(500)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle, horizonLevelAngle - 30, 2)
+        basic.pause(2500)
+    } else if (consoleState == ConsoleStates.Normal) {
+        horizonTiming = 20
+        serial.writeLine("moveServoLinear")
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
+        serial.writeLine("moveServoLinear")
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
     }
-    if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P5) == 1) {
-        RainbowSparkleUnicorn.Light.turnOn(lightPins.P8)
+})
+basic.forever(function () {
+    comment.comment("This loop controls the gauge")
+    if (consoleState == ConsoleStates.Normal) {
+        RainbowSparkleUnicorn.Controls.dial1(randint(0, 30))
+        basic.pause(1000)
+    } else {
+        RainbowSparkleUnicorn.Controls.dial1(0)
+        basic.pause(2000)
     }
-}
-RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P5, function () {
-    sortOutFuelLights()
 })
