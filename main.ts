@@ -13,7 +13,7 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     "" + keyA + keyB,
     "Spaceship Console"
     )
-    IoTConnected = 1
+    IoTConnected = true
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P8)
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
     sortOutFuelLights()
@@ -21,7 +21,8 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P2, function () {
     consoleState = ConsoleStates.YellowAlert
 RainbowSparkleUnicorn.Sound.playTrack(1)
-    basic.pause(100)
+    basic.pause(1000)
+    basic.showString("" + (RainbowSparkleUnicorn.Sound.startStop()))
     while (RainbowSparkleUnicorn.Sound.startStop() == true) {
         basic.showIcon(IconNames.Happy)
         basic.pause(1000)
@@ -60,22 +61,25 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
 RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P5, function () {
     sortOutFuelLights()
 })
-let horizonTiming = 0
 let circularLightLoopPauseMs = 0
+let horizonTiming = 0
 let keyB = ""
 let keyA = ""
-let IoTConnected = 0
+let IoTConnected = false
 enum ConsoleStates {Starting =0  , Normal=1, VideoPlaying=2, YellowAlert=3, RedAlert=4 }
 let stateInCircularLightLoop = ConsoleStates.Starting
 let consoleState = ConsoleStates.Starting
+basic.showNumber(1)
 let strip = neopixel.create(DigitalPin.P0, 12, NeoPixelMode.RGB)
 let alertStrip = strip.range(0, 10)
 strip.setBrightness(255)
 strip.showColor(neopixel.colors(NeoPixelColors.Green))
 strip.show()
+basic.showNumber(2)
 RainbowSparkleUnicorn.start()
 RainbowSparkleUnicorn.printDebugMessages()
 RainbowSparkleUnicorn.printReceivedMessages()
+basic.showNumber(3)
 RainbowSparkleUnicorn.Light.turnAllOff()
 // This is the big red button
 RainbowSparkleUnicorn.Light.turnOn(lightPins.P15)
@@ -83,12 +87,33 @@ RainbowSparkleUnicorn.Sound.setVolume(2)
 RainbowSparkleUnicorn.Sound.playTrack(2)
 let horizonLevelAngle = 110
 RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
-IoTConnected = 0
+basic.showNumber(4)
+IoTConnected = false
 control.raiseEvent(
 5550,
 EventBusValue.MICROBIT_EVT_ANY
 )
 consoleState = ConsoleStates.Normal
+basic.showIcon(IconNames.Yes)
+basic.forever(function () {
+    comment.comment("This loop controls the artificial horizon")
+    if (consoleState == ConsoleStates.Starting) {
+        serial.writeLine("This loop controls the artificial horizon")
+        horizonLevelAngle = 110
+        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
+        basic.pause(500)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle, horizonLevelAngle - 30, 2)
+        basic.pause(2500)
+    } else if (consoleState == ConsoleStates.Normal) {
+        horizonTiming = 20
+        serial.writeLine("moveServoLinear")
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
+        serial.writeLine("moveServoLinear")
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
+    }
+})
 basic.forever(function () {
     comment.comment("This loop controls the circular lights")
     circularLightLoopPauseMs = 1000
@@ -137,25 +162,6 @@ basic.forever(function () {
     stateInCircularLightLoop = consoleState
     comment.comment("pause for how long...")
     basic.pause(circularLightLoopPauseMs)
-})
-basic.forever(function () {
-    comment.comment("This loop controls the artificial horizon")
-    if (consoleState == ConsoleStates.Starting) {
-        serial.writeLine("This loop controls the artificial horizon")
-        horizonLevelAngle = 110
-        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
-        basic.pause(500)
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle, horizonLevelAngle - 30, 2)
-        basic.pause(2500)
-    } else if (consoleState == ConsoleStates.Normal) {
-        horizonTiming = 20
-        serial.writeLine("moveServoLinear")
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-        serial.writeLine("moveServoLinear")
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-    }
 })
 basic.forever(function () {
     comment.comment("This loop controls the gauge")
