@@ -21,11 +21,12 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P2, function () {
     consoleState = ConsoleStates.YellowAlert
 RainbowSparkleUnicorn.Sound.playTrack(1)
-    basic.pause(1000)
-    basic.showString("" + (RainbowSparkleUnicorn.Sound.startStop()))
-    while (RainbowSparkleUnicorn.Sound.startStop() == true) {
+    while (true) {
         basic.showIcon(IconNames.Happy)
         basic.pause(1000)
+        if (RainbowSparkleUnicorn.Sound.playingSound() == false) {
+            break;
+        }
     }
     basic.showIcon(IconNames.Sad)
 })
