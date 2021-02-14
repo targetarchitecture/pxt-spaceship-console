@@ -20,16 +20,6 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P2, function () {
     consoleState = ConsoleStates.RedAlert
-RainbowSparkleUnicorn.Sound.setVolume(3)
-    RainbowSparkleUnicorn.Sound.playTrack(1)
-    while (true) {
-        basic.showIcon(IconNames.Happy)
-        basic.pause(1000)
-        if (RainbowSparkleUnicorn.Sound.playingSound() == false) {
-            break;
-        }
-    }
-    basic.showIcon(IconNames.Sad)
 })
 RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P4, function () {
     sortOutFuelLights()
@@ -75,8 +65,6 @@ basic.showNumber(2)
 RainbowSparkleUnicorn.Light.turnAllOff()
 // This is the big red button
 RainbowSparkleUnicorn.Light.turnOn(lightPins.P15)
-RainbowSparkleUnicorn.Sound.setVolume(2)
-RainbowSparkleUnicorn.Sound.playTrack(2)
 let horizonLevelAngle = 110
 RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
 basic.showNumber(3)
@@ -174,4 +162,44 @@ basic.forever(function () {
         RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
     }
+})
+basic.forever(function () {
+    comment.comment("This loop controls the sounds")
+    comment.comment("Need to check for a transition, so we can set up the lights")
+    if (stateInCircularLightLoop != consoleState) {
+        if (consoleState == ConsoleStates.Normal) {
+            RainbowSparkleUnicorn.Sound.playTrack(2)
+        } else if (consoleState == ConsoleStates.VideoPlaying) {
+            RainbowSparkleUnicorn.Sound.pause()
+        } else if (consoleState == ConsoleStates.YellowAlert) {
+        	
+        } else if (consoleState == ConsoleStates.RedAlert) {
+            RainbowSparkleUnicorn.Sound.playTrack(1)
+            while (true) {
+                basic.showIcon(IconNames.Happy)
+                basic.pause(1000)
+                if (consoleState != ConsoleStates.RedAlert || RainbowSparkleUnicorn.Sound.playingSound() == false) {
+                    break;
+                }
+            }
+            basic.showIcon(IconNames.Sad)
+        }
+    } else {
+        if (stateInCircularLightLoop == ConsoleStates.Starting) {
+            comment.comment("Setup sounds")
+            RainbowSparkleUnicorn.Sound.setVolume(10)
+        } else if (stateInCircularLightLoop == ConsoleStates.Normal) {
+            comment.comment("Do nothing as green light setup in transition")
+        } else if (stateInCircularLightLoop == ConsoleStates.VideoPlaying) {
+            comment.comment("Do nothing as video playing light setup in transition")
+        } else if (stateInCircularLightLoop == ConsoleStates.YellowAlert) {
+            comment.comment("Just spin the light and change loop speed by altering pause time")
+        } else if (stateInCircularLightLoop == ConsoleStates.RedAlert) {
+            comment.comment("Just spin the light and change loop speed by altering pause time")
+        }
+    }
+    comment.comment("set the loop state to be the same as the console state as we have done the transition")
+    stateInCircularLightLoop = consoleState
+    comment.comment("pause for how long...")
+    basic.pause(1000)
 })
