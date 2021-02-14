@@ -47,10 +47,10 @@ RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P5, function () {
     sortOutFuelLights()
 })
 let horizonTiming = 0
+let circularLightLoopPauseMs = 0
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
-let circularLightLoopPauseMs = 0
 let keyB = ""
 let keyA = ""
 let IoTConnected = false
@@ -63,6 +63,7 @@ RainbowSparkleUnicorn.start()
 RainbowSparkleUnicorn.printDebugMessages()
 RainbowSparkleUnicorn.printReceivedMessages()
 basic.showNumber(2)
+RainbowSparkleUnicorn.Sound.setVolume(5)
 RainbowSparkleUnicorn.Light.turnAllOff()
 // This is the big red button
 RainbowSparkleUnicorn.Light.turnOn(lightPins.P15)
@@ -78,8 +79,7 @@ consoleState = ConsoleStates.Normal
 basic.showIcon(IconNames.Yes)
 basic.forever(function () {
     comment.comment("This loop controls the circular lights")
-
-    if (strip == null){
+    if (strip == null) {
         comment.comment("Setup green lights")
         strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
         alertStripRight = strip.range(0, 10)
@@ -88,7 +88,6 @@ basic.forever(function () {
         strip.showColor(neopixel.colors(NeoPixelColors.Green))
         strip.show()
     }
-
     circularLightLoopPauseMs = 1000
     comment.comment("Need to check for a transition, so we can set up the lights")
     if (stateInCircularLightLoop != consoleState) {
@@ -112,8 +111,11 @@ basic.forever(function () {
         } else if (consoleState == ConsoleStates.RedAlert) {
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
             alertStripRight.setBrightness(255)
+            alertStripRight.setBrightness(255)
             alertStripRight.showColor(neopixel.colors(NeoPixelColors.Red))
+            alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Red))
             alertStripRight.show()
+            alertStripLeft.show()
         }
     } else {
         if (stateInCircularLightLoop == ConsoleStates.Starting) {
@@ -126,15 +128,13 @@ basic.forever(function () {
             comment.comment("Just spin the light and change loop speed by altering pause time")
             alertStripLeft.rotate(1)
             alertStripRight.rotate(1)
-            alertStripLeft.show()
-            alertStripRight.show()
+            strip.show()
             circularLightLoopPauseMs = 50
         } else if (stateInCircularLightLoop == ConsoleStates.RedAlert) {
             comment.comment("Just spin the light and change loop speed by altering pause time")
             alertStripLeft.rotate(1)
             alertStripRight.rotate(1)
-            alertStripLeft.show()
-            alertStripRight.show()
+            strip.show()
             circularLightLoopPauseMs = 20
         }
     }
@@ -180,23 +180,14 @@ basic.forever(function () {
         	
         } else if (consoleState == ConsoleStates.RedAlert) {
             RainbowSparkleUnicorn.Sound.playTrack(1)
-            while (true) {
-                basic.showIcon(IconNames.Happy)
-                basic.pause(1000)
-                if (consoleState != ConsoleStates.RedAlert || RainbowSparkleUnicorn.Sound.playingSound() == false) {
-                    break;
-                }
-            }
-            basic.showIcon(IconNames.Sad)
         }
     } else {
         if (stateInCircularSoundLoop == ConsoleStates.Starting) {
-            comment.comment("Setup sounds")
-            RainbowSparkleUnicorn.Sound.setVolume(10)
+            comment.comment("Do nothing")
         } else if (stateInCircularSoundLoop == ConsoleStates.Normal) {
-           comment.comment("Do nothing")
+            comment.comment("Do nothing")
         } else if (stateInCircularSoundLoop == ConsoleStates.VideoPlaying) {
-           comment.comment("Do nothing")
+            comment.comment("Do nothing")
         } else if (stateInCircularSoundLoop == ConsoleStates.YellowAlert) {
             comment.comment("Do nothing")
         } else if (stateInCircularSoundLoop == ConsoleStates.RedAlert) {
