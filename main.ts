@@ -20,7 +20,8 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P2, function () {
     consoleState = ConsoleStates.RedAlert
-RainbowSparkleUnicorn.Sound.playTrack(1)
+RainbowSparkleUnicorn.Sound.setVolume(3)
+    RainbowSparkleUnicorn.Sound.playTrack(1)
     while (true) {
         basic.showIcon(IconNames.Happy)
         basic.pause(1000)
