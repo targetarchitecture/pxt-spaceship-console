@@ -54,8 +54,9 @@ let circularLightLoopPauseMs = 0
 let keyB = ""
 let keyA = ""
 let IoTConnected = false
-enum ConsoleStates {Starting =0  , Normal=1, VideoPlaying=2, YellowAlert=3, RedAlert=4 }
+enum ConsoleStates {Starting , Normal, VideoPlaying, YellowAlert, RedAlert}
 let stateInCircularLightLoop = ConsoleStates.Starting
+let stateInCircularSoundLoop = ConsoleStates.Starting
 let consoleState = ConsoleStates.Starting
 basic.showNumber(1)
 RainbowSparkleUnicorn.start()
@@ -77,6 +78,17 @@ consoleState = ConsoleStates.Normal
 basic.showIcon(IconNames.Yes)
 basic.forever(function () {
     comment.comment("This loop controls the circular lights")
+
+    if (strip == null){
+        comment.comment("Setup green lights")
+        strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
+        alertStripRight = strip.range(0, 10)
+        alertStripLeft = strip.range(12, 10)
+        strip.setBrightness(255)
+        strip.showColor(neopixel.colors(NeoPixelColors.Green))
+        strip.show()
+    }
+
     circularLightLoopPauseMs = 1000
     comment.comment("Need to check for a transition, so we can set up the lights")
     if (stateInCircularLightLoop != consoleState) {
@@ -105,13 +117,7 @@ basic.forever(function () {
         }
     } else {
         if (stateInCircularLightLoop == ConsoleStates.Starting) {
-            comment.comment("Setup green lights")
-            strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
-            alertStripRight = strip.range(0, 10)
-            alertStripLeft = strip.range(12, 10)
-            strip.setBrightness(255)
-            strip.showColor(neopixel.colors(NeoPixelColors.Green))
-            strip.show()
+            comment.comment("Do nothing as green light setup in transition")
         } else if (stateInCircularLightLoop == ConsoleStates.Normal) {
             comment.comment("Do nothing as green light setup in transition")
         } else if (stateInCircularLightLoop == ConsoleStates.VideoPlaying) {
@@ -165,8 +171,7 @@ basic.forever(function () {
 })
 basic.forever(function () {
     comment.comment("This loop controls the sounds")
-    comment.comment("Need to check for a transition, so we can set up the lights")
-    if (stateInCircularLightLoop != consoleState) {
+    if (stateInCircularSoundLoop != consoleState) {
         if (consoleState == ConsoleStates.Normal) {
             RainbowSparkleUnicorn.Sound.playTrack(2)
         } else if (consoleState == ConsoleStates.VideoPlaying) {
@@ -185,21 +190,21 @@ basic.forever(function () {
             basic.showIcon(IconNames.Sad)
         }
     } else {
-        if (stateInCircularLightLoop == ConsoleStates.Starting) {
+        if (stateInCircularSoundLoop == ConsoleStates.Starting) {
             comment.comment("Setup sounds")
             RainbowSparkleUnicorn.Sound.setVolume(10)
-        } else if (stateInCircularLightLoop == ConsoleStates.Normal) {
-            comment.comment("Do nothing as green light setup in transition")
-        } else if (stateInCircularLightLoop == ConsoleStates.VideoPlaying) {
-            comment.comment("Do nothing as video playing light setup in transition")
-        } else if (stateInCircularLightLoop == ConsoleStates.YellowAlert) {
-            comment.comment("Just spin the light and change loop speed by altering pause time")
-        } else if (stateInCircularLightLoop == ConsoleStates.RedAlert) {
-            comment.comment("Just spin the light and change loop speed by altering pause time")
+        } else if (stateInCircularSoundLoop == ConsoleStates.Normal) {
+           comment.comment("Do nothing")
+        } else if (stateInCircularSoundLoop == ConsoleStates.VideoPlaying) {
+           comment.comment("Do nothing")
+        } else if (stateInCircularSoundLoop == ConsoleStates.YellowAlert) {
+            comment.comment("Do nothing")
+        } else if (stateInCircularSoundLoop == ConsoleStates.RedAlert) {
+            comment.comment("Do nothing")
         }
     }
     comment.comment("set the loop state to be the same as the console state as we have done the transition")
-    stateInCircularLightLoop = consoleState
+    stateInCircularSoundLoop = consoleState
     comment.comment("pause for how long...")
     basic.pause(1000)
 })
