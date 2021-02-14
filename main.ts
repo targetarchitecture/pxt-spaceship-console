@@ -56,8 +56,8 @@ function sortOutFuelLights () {
 RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P5, function () {
     sortOutFuelLights()
 })
-let circularLightLoopPauseMs = 0
 let horizonTiming = 0
+let circularLightLoopPauseMs = 0
 let keyB = ""
 let keyA = ""
 let IoTConnected = false
@@ -65,8 +65,8 @@ enum ConsoleStates {Starting =0  , Normal=1, VideoPlaying=2, YellowAlert=3, RedA
 let stateInCircularLightLoop = ConsoleStates.Starting
 let consoleState = ConsoleStates.Starting
 basic.showNumber(1)
-let strip = neopixel.create(DigitalPin.P0, 12, NeoPixelMode.RGB)
-let alertStrip = strip.range(0, 10)
+let strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
+let alertStripRight = strip.range(0, 2)
 strip.setBrightness(255)
 strip.showColor(neopixel.colors(NeoPixelColors.Green))
 strip.show()
@@ -91,23 +91,6 @@ EventBusValue.MICROBIT_EVT_ANY
 consoleState = ConsoleStates.Normal
 basic.showIcon(IconNames.Yes)
 basic.forever(function () {
-    comment.comment("This loop controls the artificial horizon")
-    if (consoleState == ConsoleStates.Starting) {
-        serial.writeLine("This loop controls the artificial horizon")
-        horizonLevelAngle = 110
-        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
-        basic.pause(500)
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle, horizonLevelAngle - 30, 2)
-        basic.pause(2500)
-    } else if (consoleState == ConsoleStates.Normal) {
-        horizonTiming = 20
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-    }
-})
-basic.forever(function () {
     comment.comment("This loop controls the circular lights")
     circularLightLoopPauseMs = 1000
     comment.comment("Need to check for a transition, so we can set up the lights")
@@ -123,14 +106,14 @@ basic.forever(function () {
             strip.show()
         } else if (consoleState == ConsoleStates.YellowAlert) {
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            alertStrip.setBrightness(100)
-            alertStrip.showColor(neopixel.colors(NeoPixelColors.Yellow))
-            alertStrip.show()
+            alertStripRight.setBrightness(100)
+            alertStripRight.showColor(neopixel.colors(NeoPixelColors.Yellow))
+            alertStripRight.show()
         } else if (consoleState == ConsoleStates.RedAlert) {
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            alertStrip.setBrightness(255)
-            alertStrip.showColor(neopixel.colors(NeoPixelColors.Red))
-            alertStrip.show()
+            alertStripRight.setBrightness(255)
+            alertStripRight.showColor(neopixel.colors(NeoPixelColors.Red))
+            alertStripRight.show()
         }
     } else {
         if (stateInCircularLightLoop == ConsoleStates.Starting) {
@@ -155,6 +138,22 @@ basic.forever(function () {
     stateInCircularLightLoop = consoleState
     comment.comment("pause for how long...")
     basic.pause(circularLightLoopPauseMs)
+})
+basic.forever(function () {
+    comment.comment("This loop controls the artificial horizon")
+    if (consoleState == ConsoleStates.Starting) {
+        horizonLevelAngle = 110
+        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
+        basic.pause(500)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle, horizonLevelAngle - 30, 2)
+        basic.pause(2500)
+    } else if (consoleState == ConsoleStates.Normal) {
+        horizonTiming = 20
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
+    }
 })
 basic.forever(function () {
     comment.comment("This loop controls the gauge")
