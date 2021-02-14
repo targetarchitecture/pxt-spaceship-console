@@ -82,8 +82,8 @@ basic.forever(function () {
     if (strip == null) {
         comment.comment("Setup green lights")
         strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
-        alertStripRight = strip.range(0, 10)
-        alertStripLeft = strip.range(12, 10)
+        alertStripRight = strip.range(0, 6)
+        alertStripLeft = strip.range(12, 6)
         strip.setBrightness(255)
         strip.showColor(neopixel.colors(NeoPixelColors.Green))
         strip.show()
@@ -106,16 +106,12 @@ basic.forever(function () {
             alertStripLeft.setBrightness(100)
             alertStripRight.showColor(neopixel.colors(NeoPixelColors.Yellow))
             alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Yellow))
-            alertStripRight.show()
-            alertStripLeft.show()
         } else if (consoleState == ConsoleStates.RedAlert) {
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
             alertStripRight.setBrightness(255)
             alertStripRight.setBrightness(255)
             alertStripRight.showColor(neopixel.colors(NeoPixelColors.Red))
             alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Red))
-            alertStripRight.show()
-            alertStripLeft.show()
         }
     } else {
         if (stateInCircularLightLoop == ConsoleStates.Starting) {
@@ -126,14 +122,12 @@ basic.forever(function () {
             comment.comment("Do nothing as video playing light setup in transition")
         } else if (stateInCircularLightLoop == ConsoleStates.YellowAlert) {
             comment.comment("Just spin the light and change loop speed by altering pause time")
-            alertStripLeft.rotate(1)
-            alertStripRight.rotate(1)
+            strip.rotate(1)
             strip.show()
             circularLightLoopPauseMs = 50
         } else if (stateInCircularLightLoop == ConsoleStates.RedAlert) {
             comment.comment("Just spin the light and change loop speed by altering pause time")
-            alertStripLeft.rotate(1)
-            alertStripRight.rotate(1)
+            strip.rotate(1)
             strip.show()
             circularLightLoopPauseMs = 20
         }
