@@ -57,6 +57,9 @@ RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P5, function () {
     sortOutFuelLights()
 })
 let horizonTiming = 0
+let alertStripLeft: neopixel.Strip = null
+let alertStripRight: neopixel.Strip = null
+let strip: neopixel.Strip = null
 let circularLightLoopPauseMs = 0
 let keyB = ""
 let keyA = ""
@@ -65,16 +68,10 @@ enum ConsoleStates {Starting =0  , Normal=1, VideoPlaying=2, YellowAlert=3, RedA
 let stateInCircularLightLoop = ConsoleStates.Starting
 let consoleState = ConsoleStates.Starting
 basic.showNumber(1)
-let strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
-let alertStripRight = strip.range(0, 2)
-strip.setBrightness(255)
-strip.showColor(neopixel.colors(NeoPixelColors.Green))
-strip.show()
-basic.showNumber(2)
 RainbowSparkleUnicorn.start()
 RainbowSparkleUnicorn.printDebugMessages()
 RainbowSparkleUnicorn.printReceivedMessages()
-basic.showNumber(3)
+basic.showNumber(2)
 RainbowSparkleUnicorn.Light.turnAllOff()
 // This is the big red button
 RainbowSparkleUnicorn.Light.turnOn(lightPins.P15)
@@ -82,7 +79,7 @@ RainbowSparkleUnicorn.Sound.setVolume(2)
 RainbowSparkleUnicorn.Sound.playTrack(2)
 let horizonLevelAngle = 110
 RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
-basic.showNumber(4)
+basic.showNumber(3)
 IoTConnected = false
 control.raiseEvent(
 5550,
@@ -107,8 +104,11 @@ basic.forever(function () {
         } else if (consoleState == ConsoleStates.YellowAlert) {
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
             alertStripRight.setBrightness(100)
+            alertStripLeft.setBrightness(100)
             alertStripRight.showColor(neopixel.colors(NeoPixelColors.Yellow))
+            alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Yellow))
             alertStripRight.show()
+            alertStripLeft.show()
         } else if (consoleState == ConsoleStates.RedAlert) {
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
             alertStripRight.setBrightness(255)
@@ -117,20 +117,30 @@ basic.forever(function () {
         }
     } else {
         if (stateInCircularLightLoop == ConsoleStates.Starting) {
-            comment.comment("Do nothing as green light setup in start block")
+            comment.comment("Setup green lights")
+            strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
+            alertStripRight = strip.range(0, 10)
+            alertStripLeft = strip.range(12, 10)
+            strip.setBrightness(255)
+            strip.showColor(neopixel.colors(NeoPixelColors.Green))
+            strip.show()
         } else if (stateInCircularLightLoop == ConsoleStates.Normal) {
             comment.comment("Do nothing as green light setup in transition")
         } else if (stateInCircularLightLoop == ConsoleStates.VideoPlaying) {
             comment.comment("Do nothing as video playing light setup in transition")
         } else if (stateInCircularLightLoop == ConsoleStates.YellowAlert) {
             comment.comment("Just spin the light and change loop speed by altering pause time")
-            strip.rotate(1)
-            strip.show()
+            alertStripLeft.rotate(1)
+            alertStripRight.rotate(1)
+            alertStripLeft.show()
+            alertStripRight.show()
             circularLightLoopPauseMs = 50
         } else if (stateInCircularLightLoop == ConsoleStates.RedAlert) {
             comment.comment("Just spin the light and change loop speed by altering pause time")
-            strip.rotate(1)
-            strip.show()
+            alertStripLeft.rotate(1)
+            alertStripRight.rotate(1)
+            alertStripLeft.show()
+            alertStripRight.show()
             circularLightLoopPauseMs = 20
         }
     }
@@ -138,6 +148,16 @@ basic.forever(function () {
     stateInCircularLightLoop = consoleState
     comment.comment("pause for how long...")
     basic.pause(circularLightLoopPauseMs)
+})
+basic.forever(function () {
+    comment.comment("This loop controls the gauge")
+    if (consoleState == ConsoleStates.Normal) {
+        RainbowSparkleUnicorn.Controls.dial1(randint(0, 30))
+        basic.pause(1000)
+    } else {
+        RainbowSparkleUnicorn.Controls.dial1(0)
+        basic.pause(2000)
+    }
 })
 basic.forever(function () {
     comment.comment("This loop controls the artificial horizon")
@@ -153,15 +173,5 @@ basic.forever(function () {
         basic.pause(horizonTiming * 1000 + 1000)
         RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
-    }
-})
-basic.forever(function () {
-    comment.comment("This loop controls the gauge")
-    if (consoleState == ConsoleStates.Normal) {
-        RainbowSparkleUnicorn.Controls.dial1(randint(0, 30))
-        basic.pause(1000)
-    } else {
-        RainbowSparkleUnicorn.Controls.dial1(0)
-        basic.pause(2000)
     }
 })
