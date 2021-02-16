@@ -202,7 +202,8 @@ basic.forever(function () {
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the gauge")
     if (consoleState == ConsoleStates.Normal) {
-        RainbowSparkleUnicorn.Controls.dial1(randint(0, 30))
+        RainbowSparkleUnicorn.comment("232 is 3v on to 0-255 scale")
+        RainbowSparkleUnicorn.Controls.dial1(randint(0, 232))
         basic.pause(1000)
     } else {
         RainbowSparkleUnicorn.Controls.dial1(0)
