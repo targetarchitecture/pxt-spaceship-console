@@ -80,7 +80,7 @@ EventBusValue.MICROBIT_EVT_ANY
 consoleState = ConsoleStates.Normal
 basic.showIcon(IconNames.Yes)
 basic.forever(function () {
-    comment.comment("This loop controls the artificial horizon")
+    RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
     horizonLevelAngle = 110
     if (consoleState == ConsoleStates.Starting) {
         RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
@@ -88,14 +88,14 @@ basic.forever(function () {
         RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle, horizonLevelAngle - 30, 2)
         basic.pause(2500)
     } else if (consoleState == ConsoleStates.Normal) {
-        comment.comment("Timing in seconds")
+        RainbowSparkleUnicorn.comment("Timing in seconds")
         horizonTiming = 20
         RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
         RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
     } else if (consoleState == ConsoleStates.RedAlert) {
-        comment.comment("Timing in seconds")
+        RainbowSparkleUnicorn.comment("Timing in seconds")
         horizonTiming = 10
         RainbowSparkleUnicorn.Movement.moveServoBouncy(Servo.P0, horizonLevelAngle - 50, horizonLevelAngle + 50, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
@@ -107,7 +107,7 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    comment.comment("This loop controls the sounds")
+    RainbowSparkleUnicorn.comment("This loop controls the sounds")
     if (stateInCircularSoundLoop != consoleState) {
         if (consoleState == ConsoleStates.Normal) {
             RainbowSparkleUnicorn.Sound.playTrack(2)
@@ -120,29 +120,29 @@ basic.forever(function () {
         }
     } else {
         if (stateInCircularSoundLoop == ConsoleStates.Starting) {
-            comment.comment("Do nothing")
+            RainbowSparkleUnicorn.comment("Do nothing")
         } else if (stateInCircularSoundLoop == ConsoleStates.Normal) {
-            comment.comment("Do nothing")
+            RainbowSparkleUnicorn.comment("Do nothing")
         } else if (stateInCircularSoundLoop == ConsoleStates.VideoPlaying) {
-            comment.comment("Do nothing")
+            RainbowSparkleUnicorn.comment("Do nothing")
         } else if (stateInCircularSoundLoop == ConsoleStates.YellowAlert) {
-            comment.comment("Do nothing")
+            RainbowSparkleUnicorn.comment("Do nothing")
         } else if (stateInCircularSoundLoop == ConsoleStates.RedAlert) {
-            comment.comment("Check to see if the track is playing, once stopped then reduce to yellow alert")
+            RainbowSparkleUnicorn.comment("Check to see if the track is playing, once stopped then reduce to yellow alert")
             if (RainbowSparkleUnicorn.Sound.playingSound() == false) {
-                let consoleState = ConsoleStates.YellowAlert
+                let consoleState2 = ConsoleStates.YellowAlert
             }
         }
     }
-    comment.comment("set the loop state to be the same as the console state as we have done the transition")
+    RainbowSparkleUnicorn.comment("set the loop state to be the same as the console state as we have done the transition")
     stateInCircularSoundLoop = consoleState
-    comment.comment("pause for how long...")
+    RainbowSparkleUnicorn.comment("pause for how long...")
     basic.pause(1000)
 })
 basic.forever(function () {
-    comment.comment("This loop controls the circular lights")
+    RainbowSparkleUnicorn.comment("This loop controls the circular lights")
     if (strip == null) {
-        comment.comment("Setup green lights")
+        RainbowSparkleUnicorn.comment("Setup green lights")
         strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
         alertStripRight = strip.range(0, 6)
         alertStripLeft = strip.range(12, 6)
@@ -151,7 +151,7 @@ basic.forever(function () {
         strip.show()
     }
     circularLightLoopPauseMs = 1000
-    comment.comment("Need to check for a transition, so we can set up the lights")
+    RainbowSparkleUnicorn.comment("Need to check for a transition, so we can set up the lights")
     if (stateInCircularLightLoop != consoleState) {
         circularLightLoopPauseMs = 10
         if (consoleState == ConsoleStates.Normal) {
@@ -177,30 +177,30 @@ basic.forever(function () {
         }
     } else {
         if (stateInCircularLightLoop == ConsoleStates.Starting) {
-            comment.comment("Do nothing as green light setup in transition")
+            RainbowSparkleUnicorn.comment("Do nothing as green light setup in transition")
         } else if (stateInCircularLightLoop == ConsoleStates.Normal) {
-            comment.comment("Do nothing as green light setup in transition")
+            RainbowSparkleUnicorn.comment("Do nothing as green light setup in transition")
         } else if (stateInCircularLightLoop == ConsoleStates.VideoPlaying) {
-            comment.comment("Do nothing as video playing light setup in transition")
+            RainbowSparkleUnicorn.comment("Do nothing as video playing light setup in transition")
         } else if (stateInCircularLightLoop == ConsoleStates.YellowAlert) {
-            comment.comment("Just spin the light and change loop speed by altering pause time")
+            RainbowSparkleUnicorn.comment("Just spin the light and change loop speed by altering pause time")
             strip.rotate(1)
             strip.show()
             circularLightLoopPauseMs = 50
         } else if (stateInCircularLightLoop == ConsoleStates.RedAlert) {
-            comment.comment("Just spin the light and change loop speed by altering pause time")
+            RainbowSparkleUnicorn.comment("Just spin the light and change loop speed by altering pause time")
             strip.rotate(1)
             strip.show()
             circularLightLoopPauseMs = 20
         }
     }
-    comment.comment("set the loop state to be the same as the console state as we have done the transition")
+    RainbowSparkleUnicorn.comment("set the loop state to be the same as the console state as we have done the transition")
     stateInCircularLightLoop = consoleState
-    comment.comment("pause for how long...")
+    RainbowSparkleUnicorn.comment("pause for how long...")
     basic.pause(circularLightLoopPauseMs)
 })
 basic.forever(function () {
-    comment.comment("This loop controls the gauge")
+    RainbowSparkleUnicorn.comment("This loop controls the gauge")
     if (consoleState == ConsoleStates.Normal) {
         RainbowSparkleUnicorn.Controls.dial1(randint(0, 30))
         basic.pause(1000)
