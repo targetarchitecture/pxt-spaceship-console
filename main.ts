@@ -15,6 +15,7 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     "" + keyA + keyB,
     "Spaceship Console"
     )
+    RainbowSparkleUnicorn.IoT.startReceivingMessages("spaceship-console")
     IoTConnected = true
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P8)
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
@@ -22,6 +23,7 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P2, function () {
     consoleState = ConsoleStates.RedAlert
+RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console", "Red Alert")
 })
 RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P4, function () {
     sortOutFuelLights()
