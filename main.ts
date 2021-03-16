@@ -72,7 +72,7 @@ RainbowSparkleUnicorn.Controls.turnSlider2(OnOff.ON)
 // This is the big red button
 RainbowSparkleUnicorn.Light.turnOn(lightPins.P15)
 let horizonLevelAngle = 110
-RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
+RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
 basic.showNumber(3)
 IoTConnected = false
 control.raiseEvent(
@@ -156,26 +156,26 @@ basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
     horizonLevelAngle = 110
     if (consoleState == ConsoleStates.Starting) {
-        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
+        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
         basic.pause(500)
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle, horizonLevelAngle - 30, 2)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle, horizonLevelAngle - 30, 2)
         basic.pause(2500)
     } else if (consoleState == ConsoleStates.Normal) {
         RainbowSparkleUnicorn.comment("Timing in seconds")
         horizonTiming = 20
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P0, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
     } else if (consoleState == ConsoleStates.RedAlert) {
         RainbowSparkleUnicorn.comment("Timing in seconds")
         horizonTiming = 10
-        RainbowSparkleUnicorn.Movement.moveServoBouncy(Servo.P0, horizonLevelAngle - 50, horizonLevelAngle + 50, horizonTiming)
+        RainbowSparkleUnicorn.Movement.moveServoBouncy(Servo.P8, horizonLevelAngle - 50, horizonLevelAngle + 50, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
-        RainbowSparkleUnicorn.Movement.moveServoBouncy(Servo.P0, horizonLevelAngle + 50, horizonLevelAngle - 50, horizonTiming)
+        RainbowSparkleUnicorn.Movement.moveServoBouncy(Servo.P8, horizonLevelAngle + 50, horizonLevelAngle - 50, horizonTiming)
         basic.pause(horizonTiming * 1000 + 1000)
     } else {
-        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P0, horizonLevelAngle)
+        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
         basic.pause(2000)
     }
 })
