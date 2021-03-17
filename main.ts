@@ -1,10 +1,10 @@
 control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     // Pink Right Light
-    RainbowSparkleUnicorn.Light.turnOff(lightPins.P8)
-    RainbowSparkleUnicorn.Light.blink(lightPins.P8, 500, 500)
+    RainbowSparkleUnicorn.Light.turnOff(lightPins.P13)
+    RainbowSparkleUnicorn.Light.blink(lightPins.P13, 500, 500)
     // Pink Left Light
-    RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
-    RainbowSparkleUnicorn.Light.blink(lightPins.P9, 500, 500)
+    RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
+    RainbowSparkleUnicorn.Light.blink(lightPins.P14, 500, 500)
     RainbowSparkleUnicorn.IoT.connectToInterWeb(
     "152 2.4GHz",
     "derwenthorpe",
@@ -15,8 +15,8 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     )
     RainbowSparkleUnicorn.IoT.startReceivingMessages("spaceship-console")
     IoTConnected = true
-    RainbowSparkleUnicorn.Light.turnOff(lightPins.P8)
-    RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
+    RainbowSparkleUnicorn.Light.turnOff(lightPins.P13)
+    RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
     sortOutFuelLights()
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P2, function () {
@@ -35,13 +35,13 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P4, function () {
 function sortOutFuelLights () {
     if (IoTConnected == true) {
         basic.clearScreen()
-        RainbowSparkleUnicorn.Light.turnOff(lightPins.P9)
-        RainbowSparkleUnicorn.Light.turnOff(lightPins.P8)
-        if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P4) == 1) {
-            RainbowSparkleUnicorn.Light.turnOn(lightPins.P9)
+        RainbowSparkleUnicorn.Light.turnOff(lightPins.P13)
+        RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
+        if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P8) == 1) {
+            RainbowSparkleUnicorn.Light.turnOn(lightPins.P13)
         }
-        if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P5) == 1) {
-            RainbowSparkleUnicorn.Light.turnOn(lightPins.P8)
+        if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P13) == 1) {
+            RainbowSparkleUnicorn.Light.turnOn(lightPins.P14)
         }
     }
 }
