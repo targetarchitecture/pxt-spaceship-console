@@ -217,6 +217,4 @@ basic.forever(function () {
     basic.pause(1000)
     sliderYellow = RainbowSparkleUnicorn.Controls.Slider1()
     sliderOrange = RainbowSparkleUnicorn.Controls.Slider2()
-    serial.writeValue("orange", sliderOrange)
-    serial.writeValue("yellow", sliderYellow)
 })
