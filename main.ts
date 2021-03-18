@@ -45,16 +45,20 @@ function sortOutFuelLights () {
         }
     }
 }
+RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P0, function () {
+    RainbowSparkleUnicorn.comment("Press red spinner to warp back to green")
+    consoleState = ConsoleStates.Normal
+})
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
     sortOutFuelLights()
 })
-let sliderOrange = 0
-let sliderYellow = 0
-let horizonTiming = 0
 let circularLightLoopPauseMs = 0
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
+let sliderYellow = 0
+let sliderOrange = 0
+let horizonTiming = 0
 let IoTConnected = false
 enum ConsoleStates {Starting , Normal, VideoPlaying, YellowAlert, RedAlert}
 let stateInCircularLightLoop = ConsoleStates.Starting
@@ -73,6 +77,7 @@ RainbowSparkleUnicorn.Controls.turnSlider2(OnOff.ON)
 RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
 let horizonLevelAngle = 110
 RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
+music.setBuiltInSpeakerEnabled(true)
 basic.showNumber(3)
 IoTConnected = false
 control.raiseEvent(
@@ -81,66 +86,6 @@ EventBusValue.MICROBIT_EVT_ANY
 )
 consoleState = ConsoleStates.Normal
 basic.showIcon(IconNames.Yes)
-basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop controls the circular lights")
-    if (strip == null) {
-        RainbowSparkleUnicorn.comment("Setup green lights")
-        strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
-        alertStripRight = strip.range(0, 6)
-        alertStripLeft = strip.range(12, 6)
-        strip.setBrightness(255)
-        strip.showColor(neopixel.colors(NeoPixelColors.Green))
-        strip.show()
-    }
-    circularLightLoopPauseMs = 1000
-    RainbowSparkleUnicorn.comment("Need to check for a transition, so we can set up the lights")
-    if (stateInCircularLightLoop != consoleState) {
-        circularLightLoopPauseMs = 10
-        if (consoleState == ConsoleStates.Normal) {
-            strip.setBrightness(30)
-            strip.showColor(neopixel.colors(NeoPixelColors.Green))
-            strip.show()
-        } else if (consoleState == ConsoleStates.VideoPlaying) {
-            strip.setBrightness(100)
-            strip.showColor(neopixel.colors(NeoPixelColors.Indigo))
-            strip.show()
-        } else if (consoleState == ConsoleStates.YellowAlert) {
-            strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            alertStripRight.setBrightness(100)
-            alertStripLeft.setBrightness(100)
-            alertStripRight.showColor(neopixel.colors(NeoPixelColors.Yellow))
-            alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Yellow))
-        } else if (consoleState == ConsoleStates.RedAlert) {
-            strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            alertStripRight.setBrightness(255)
-            alertStripRight.setBrightness(255)
-            alertStripRight.showColor(neopixel.colors(NeoPixelColors.Red))
-            alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Red))
-        }
-    } else {
-        if (stateInCircularLightLoop == ConsoleStates.Starting) {
-            RainbowSparkleUnicorn.comment("Do nothing as green light setup in transition")
-        } else if (stateInCircularLightLoop == ConsoleStates.Normal) {
-            RainbowSparkleUnicorn.comment("Do nothing as green light setup in transition")
-        } else if (stateInCircularLightLoop == ConsoleStates.VideoPlaying) {
-            RainbowSparkleUnicorn.comment("Do nothing as video playing light setup in transition")
-        } else if (stateInCircularLightLoop == ConsoleStates.YellowAlert) {
-            RainbowSparkleUnicorn.comment("Just spin the light and change loop speed by altering pause time")
-            strip.rotate(1)
-            strip.show()
-            circularLightLoopPauseMs = 50
-        } else if (stateInCircularLightLoop == ConsoleStates.RedAlert) {
-            RainbowSparkleUnicorn.comment("Just spin the light and change loop speed by altering pause time")
-            strip.rotate(1)
-            strip.show()
-            circularLightLoopPauseMs = 20
-        }
-    }
-    RainbowSparkleUnicorn.comment("set the loop state to be the same as the console state as we have done the transition")
-    stateInCircularLightLoop = consoleState
-    RainbowSparkleUnicorn.comment("pause for how long...")
-    basic.pause(circularLightLoopPauseMs)
-})
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the gauge")
     if (consoleState == ConsoleStates.Normal) {
@@ -214,9 +159,80 @@ basic.forever(function () {
 })
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop reads the slider values")
-    basic.pause(1000)
-    sliderYellow = RainbowSparkleUnicorn.Controls.Slider1()
-    sliderOrange = RainbowSparkleUnicorn.Controls.Slider2()
+    basic.pause(500)
+    if (sliderOrange != RainbowSparkleUnicorn.Controls.Slider1()) {
+        sliderOrange = RainbowSparkleUnicorn.Controls.Slider1()
+        RainbowSparkleUnicorn.Sound.setVolume(Math.map(100 - sliderOrange, 0, 100, 0, 30))
+    }
+    RainbowSparkleUnicorn.comment("When the slider moves play a note")
+    if (sliderYellow != RainbowSparkleUnicorn.Controls.Slider2()) {
+        sliderYellow = RainbowSparkleUnicorn.Controls.Slider2()
+        //music.ringTone(Math.map(sliderYellow, 0, 100, 131, 262))
+       // music.setPlayTone(Math.map(sliderYellow, 0, 100, 131, 262),500)
+        serial.writeValue("hz", Math.map(sliderYellow, 0, 100, 131, 262))
+    } else {
+        serial.writeValue("hz", 0)
+    }
     serial.writeValue("yellow", sliderYellow)
     serial.writeValue("orange", sliderOrange)
+})
+basic.forever(function () {
+    RainbowSparkleUnicorn.comment("This loop controls the circular lights")
+    if (strip == null) {
+        RainbowSparkleUnicorn.comment("Setup green lights")
+        strip = neopixel.create(DigitalPin.P1, 24, NeoPixelMode.RGB)
+        alertStripRight = strip.range(0, 6)
+        alertStripLeft = strip.range(12, 6)
+        strip.setBrightness(255)
+        strip.showColor(neopixel.colors(NeoPixelColors.Green))
+        strip.show()
+    }
+    circularLightLoopPauseMs = 1000
+    RainbowSparkleUnicorn.comment("Need to check for a transition, so we can set up the lights")
+    if (stateInCircularLightLoop != consoleState) {
+        circularLightLoopPauseMs = 10
+        if (consoleState == ConsoleStates.Normal) {
+            strip.setBrightness(30)
+            strip.showColor(neopixel.colors(NeoPixelColors.Green))
+            strip.show()
+        } else if (consoleState == ConsoleStates.VideoPlaying) {
+            strip.setBrightness(100)
+            strip.showColor(neopixel.colors(NeoPixelColors.Indigo))
+            strip.show()
+        } else if (consoleState == ConsoleStates.YellowAlert) {
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
+            alertStripRight.setBrightness(100)
+            alertStripLeft.setBrightness(100)
+            alertStripRight.showColor(neopixel.colors(NeoPixelColors.Yellow))
+            alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Yellow))
+        } else if (consoleState == ConsoleStates.RedAlert) {
+            strip.showColor(neopixel.colors(NeoPixelColors.Black))
+            alertStripRight.setBrightness(255)
+            alertStripRight.setBrightness(255)
+            alertStripRight.showColor(neopixel.colors(NeoPixelColors.Red))
+            alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Red))
+        }
+    } else {
+        if (stateInCircularLightLoop == ConsoleStates.Starting) {
+            RainbowSparkleUnicorn.comment("Do nothing as green light setup in transition")
+        } else if (stateInCircularLightLoop == ConsoleStates.Normal) {
+            RainbowSparkleUnicorn.comment("Do nothing as green light setup in transition")
+        } else if (stateInCircularLightLoop == ConsoleStates.VideoPlaying) {
+            RainbowSparkleUnicorn.comment("Do nothing as video playing light setup in transition")
+        } else if (stateInCircularLightLoop == ConsoleStates.YellowAlert) {
+            RainbowSparkleUnicorn.comment("Just spin the light and change loop speed by altering pause time")
+            strip.rotate(1)
+            strip.show()
+            circularLightLoopPauseMs = 50
+        } else if (stateInCircularLightLoop == ConsoleStates.RedAlert) {
+            RainbowSparkleUnicorn.comment("Just spin the light and change loop speed by altering pause time")
+            strip.rotate(1)
+            strip.show()
+            circularLightLoopPauseMs = 20
+        }
+    }
+    RainbowSparkleUnicorn.comment("set the loop state to be the same as the console state as we have done the transition")
+    stateInCircularLightLoop = consoleState
+    RainbowSparkleUnicorn.comment("pause for how long...")
+    basic.pause(circularLightLoopPauseMs)
 })
