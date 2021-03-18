@@ -19,17 +19,17 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
     sortOutFuelLights()
 })
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P2, function () {
+RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P13, function () {
+    sortOutFuelLights()
+})
+RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P1, function () {
     consoleState = ConsoleStates.RedAlert
 RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console", "Red Alert")
 })
-RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P4, function () {
+RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P13, function () {
     sortOutFuelLights()
 })
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P5, function () {
-    sortOutFuelLights()
-})
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P4, function () {
+RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P8, function () {
     sortOutFuelLights()
 })
 function sortOutFuelLights () {
@@ -45,7 +45,7 @@ function sortOutFuelLights () {
         }
     }
 }
-RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P5, function () {
+RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
     sortOutFuelLights()
 })
 let sliderOrange = 0
@@ -70,7 +70,7 @@ RainbowSparkleUnicorn.Light.turnAllOff()
 RainbowSparkleUnicorn.Controls.turnSlider1(OnOff.ON)
 RainbowSparkleUnicorn.Controls.turnSlider2(OnOff.ON)
 // This is the big red button
-RainbowSparkleUnicorn.Light.turnOn(lightPins.P15)
+RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
 let horizonLevelAngle = 110
 RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
 basic.showNumber(3)
@@ -217,4 +217,6 @@ basic.forever(function () {
     basic.pause(1000)
     sliderYellow = RainbowSparkleUnicorn.Controls.Slider1()
     sliderOrange = RainbowSparkleUnicorn.Controls.Slider2()
+    serial.writeValue("yellow", sliderYellow)
+    serial.writeValue("orange", sliderOrange)
 })
