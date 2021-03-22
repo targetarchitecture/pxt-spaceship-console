@@ -24,9 +24,6 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
     sortOutFuelLights()
 })
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P13, function () {
-    sortOutFuelLights()
-})
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P1, function () {
     basic.showIcon(IconNames.SmallHeart)
     consoleState = ConsoleStates.RedAlert
@@ -35,9 +32,6 @@ basic.showIcon(IconNames.Heart)
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console", "Red Alert")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P13, function () {
-    sortOutFuelLights()
-})
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
     sortOutFuelLights()
 })
 function sortOutFuelLights () {
@@ -61,13 +55,13 @@ basic.showIcon(IconNames.TShirt)
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
     sortOutFuelLights()
 })
+let horizonTiming = 0
 let circularLightLoopPauseMs = 0
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
 let hz = 0
 let sliderYellow = 0
-let horizonTiming = 0
 let sliderOrange = 0
 let IoTConnected = false
 enum ConsoleStates {Starting , Normal, VideoPlaying, YellowAlert, RedAlert}
@@ -96,77 +90,6 @@ EventBusValue.MICROBIT_EVT_ANY
 )
 consoleState = ConsoleStates.Normal
 basic.showIcon(IconNames.Yes)
-basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop controls the gauge")
-    if (consoleState == ConsoleStates.Normal) {
-        RainbowSparkleUnicorn.comment("232 is 3v on to 0-255 scale")
-        RainbowSparkleUnicorn.Controls.dial1(randint(0, 232))
-        basic.pause(1000)
-    } else {
-        RainbowSparkleUnicorn.Controls.dial1(0)
-        basic.pause(2000)
-    }
-})
-basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
-    horizonLevelAngle = 110
-    if (consoleState == ConsoleStates.Starting) {
-        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
-        basic.pause(500)
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle, horizonLevelAngle - 30, 2)
-        basic.pause(2500)
-    } else if (consoleState == ConsoleStates.Normal) {
-        RainbowSparkleUnicorn.comment("Timing in seconds")
-        horizonTiming = 20
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-    } else if (consoleState == ConsoleStates.RedAlert) {
-        RainbowSparkleUnicorn.comment("Timing in seconds")
-        horizonTiming = 10
-        RainbowSparkleUnicorn.Movement.moveServoBouncy(Servo.P8, horizonLevelAngle - 50, horizonLevelAngle + 50, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-        RainbowSparkleUnicorn.Movement.moveServoBouncy(Servo.P8, horizonLevelAngle + 50, horizonLevelAngle - 50, horizonTiming)
-        basic.pause(horizonTiming * 1000 + 1000)
-    } else {
-        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
-        basic.pause(2000)
-    }
-})
-basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop controls the sounds")
-    if (stateInCircularSoundLoop != consoleState) {
-        if (consoleState == ConsoleStates.Normal) {
-            RainbowSparkleUnicorn.Sound.playTrack(2)
-        } else if (consoleState == ConsoleStates.VideoPlaying) {
-            RainbowSparkleUnicorn.Sound.pause()
-        } else if (consoleState == ConsoleStates.YellowAlert) {
-        	
-        } else if (consoleState == ConsoleStates.RedAlert) {
-            RainbowSparkleUnicorn.Sound.playTrack(1)
-        }
-    } else {
-        if (stateInCircularSoundLoop == ConsoleStates.Starting) {
-            RainbowSparkleUnicorn.comment("Do nothing")
-        } else if (stateInCircularSoundLoop == ConsoleStates.Normal) {
-            RainbowSparkleUnicorn.comment("Do nothing")
-        } else if (stateInCircularSoundLoop == ConsoleStates.VideoPlaying) {
-            RainbowSparkleUnicorn.comment("Do nothing")
-        } else if (stateInCircularSoundLoop == ConsoleStates.YellowAlert) {
-            RainbowSparkleUnicorn.comment("Do nothing")
-        } else if (stateInCircularSoundLoop == ConsoleStates.RedAlert) {
-            RainbowSparkleUnicorn.comment("Check to see if the track is playing, once stopped then reduce to yellow alert")
-            if (RainbowSparkleUnicorn.Sound.playingSound() == false) {
-                let consoleState2 = ConsoleStates.YellowAlert
-            }
-        }
-    }
-    RainbowSparkleUnicorn.comment("set the loop state to be the same as the console state as we have done the transition")
-    stateInCircularSoundLoop = consoleState
-    RainbowSparkleUnicorn.comment("pause for how long...")
-    basic.pause(1000)
-})
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop reads the slider values")
     basic.pause(500)
@@ -246,4 +169,75 @@ basic.forever(function () {
     stateInCircularLightLoop = consoleState
     RainbowSparkleUnicorn.comment("pause for how long...")
     basic.pause(circularLightLoopPauseMs)
+})
+basic.forever(function () {
+    RainbowSparkleUnicorn.comment("This loop controls the gauge")
+    if (consoleState == ConsoleStates.Normal) {
+        RainbowSparkleUnicorn.comment("232 is 3v on to 0-255 scale")
+        RainbowSparkleUnicorn.Controls.dial1(randint(0, 232))
+        basic.pause(1000)
+    } else {
+        RainbowSparkleUnicorn.Controls.dial1(0)
+        basic.pause(2000)
+    }
+})
+basic.forever(function () {
+    RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
+    horizonLevelAngle = 110
+    if (consoleState == ConsoleStates.Starting) {
+        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
+        basic.pause(500)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle, horizonLevelAngle - 30, 2)
+        basic.pause(2500)
+    } else if (consoleState == ConsoleStates.Normal) {
+        RainbowSparkleUnicorn.comment("Timing in seconds")
+        horizonTiming = 20
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle - 30, horizonLevelAngle + 30, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle + 30, horizonLevelAngle - 30, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
+    } else if (consoleState == ConsoleStates.RedAlert) {
+        RainbowSparkleUnicorn.comment("Timing in seconds")
+        horizonTiming = 10
+        RainbowSparkleUnicorn.Movement.moveServoBouncy(Servo.P8, horizonLevelAngle - 50, horizonLevelAngle + 50, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
+        RainbowSparkleUnicorn.Movement.moveServoBouncy(Servo.P8, horizonLevelAngle + 50, horizonLevelAngle - 50, horizonTiming)
+        basic.pause(horizonTiming * 1000 + 1000)
+    } else {
+        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
+        basic.pause(2000)
+    }
+})
+basic.forever(function () {
+    RainbowSparkleUnicorn.comment("This loop controls the sounds")
+    if (stateInCircularSoundLoop != consoleState) {
+        if (consoleState == ConsoleStates.Normal) {
+            RainbowSparkleUnicorn.Sound.playTrack(2)
+        } else if (consoleState == ConsoleStates.VideoPlaying) {
+            RainbowSparkleUnicorn.Sound.pause()
+        } else if (consoleState == ConsoleStates.YellowAlert) {
+        	
+        } else if (consoleState == ConsoleStates.RedAlert) {
+            RainbowSparkleUnicorn.Sound.playTrack(1)
+        }
+    } else {
+        if (stateInCircularSoundLoop == ConsoleStates.Starting) {
+            RainbowSparkleUnicorn.comment("Do nothing")
+        } else if (stateInCircularSoundLoop == ConsoleStates.Normal) {
+            RainbowSparkleUnicorn.comment("Do nothing")
+        } else if (stateInCircularSoundLoop == ConsoleStates.VideoPlaying) {
+            RainbowSparkleUnicorn.comment("Do nothing")
+        } else if (stateInCircularSoundLoop == ConsoleStates.YellowAlert) {
+            RainbowSparkleUnicorn.comment("Do nothing")
+        } else if (stateInCircularSoundLoop == ConsoleStates.RedAlert) {
+            RainbowSparkleUnicorn.comment("Check to see if the track is playing, once stopped then reduce to yellow alert")
+            if (RainbowSparkleUnicorn.Sound.playingSound() == false) {
+                let consoleState2 = ConsoleStates.YellowAlert
+            }
+        }
+    }
+    RainbowSparkleUnicorn.comment("set the loop state to be the same as the console state as we have done the transition")
+    stateInCircularSoundLoop = consoleState
+    RainbowSparkleUnicorn.comment("pause for how long...")
+    basic.pause(1000)
 })
