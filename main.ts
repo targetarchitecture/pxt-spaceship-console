@@ -24,7 +24,7 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
     sortOutFuelLights()
 })
-RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P13, function () {
+RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P13, function () {
     sortOutFuelLights()
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P1, function () {
@@ -37,7 +37,7 @@ basic.showIcon(IconNames.Heart)
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P13, function () {
     sortOutFuelLights()
 })
-RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P8, function () {
+RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
     sortOutFuelLights()
 })
 function sortOutFuelLights () {
