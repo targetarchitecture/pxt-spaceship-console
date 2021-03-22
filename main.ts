@@ -28,8 +28,11 @@ RainbowSparkleUnicorn.Switch.onSwitchReleased(switchPins.P13, function () {
     sortOutFuelLights()
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P1, function () {
+    basic.showIcon(IconNames.SmallHeart)
     consoleState = ConsoleStates.RedAlert
-RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console", "Red Alert")
+basic.showIcon(IconNames.Heart)
+    basic.pause(100)
+    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console", "Red Alert")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P13, function () {
     sortOutFuelLights()
@@ -53,6 +56,7 @@ function sortOutFuelLights () {
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P0, function () {
     RainbowSparkleUnicorn.comment("Press red spinner to warp back to green")
     consoleState = ConsoleStates.Normal
+basic.showIcon(IconNames.TShirt)
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
     sortOutFuelLights()
