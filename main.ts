@@ -1,3 +1,8 @@
+function setVolumes () {
+    sliderOrange = RainbowSparkleUnicorn.Controls.Slider1()
+    RainbowSparkleUnicorn.Sound.setVolume(Math.map(100 - sliderOrange, 0, 100, 0, 30))
+    music.setVolume(Math.map(sliderOrange, 0, 100, 0, 255))
+}
 control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     // Pink Right Light
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P13)
@@ -56,9 +61,10 @@ let circularLightLoopPauseMs = 0
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
+let hz = 0
 let sliderYellow = 0
-let sliderOrange = 0
 let horizonTiming = 0
+let sliderOrange = 0
 let IoTConnected = false
 enum ConsoleStates {Starting , Normal, VideoPlaying, YellowAlert, RedAlert}
 let stateInCircularLightLoop = ConsoleStates.Starting
@@ -161,15 +167,16 @@ basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop reads the slider values")
     basic.pause(500)
     if (sliderOrange != RainbowSparkleUnicorn.Controls.Slider1()) {
-        sliderOrange = RainbowSparkleUnicorn.Controls.Slider1()
-        RainbowSparkleUnicorn.Sound.setVolume(Math.map(100 - sliderOrange, 0, 100, 0, 30))
+        setVolumes()
     }
     RainbowSparkleUnicorn.comment("When the slider moves play a note")
     if (sliderYellow != RainbowSparkleUnicorn.Controls.Slider2()) {
         sliderYellow = RainbowSparkleUnicorn.Controls.Slider2()
-        //music.ringTone(Math.map(sliderYellow, 0, 100, 131, 262))
-       // music.setPlayTone(Math.map(sliderYellow, 0, 100, 131, 262),500)
-        serial.writeValue("hz", Math.map(sliderYellow, 0, 100, 131, 262))
+        hz = Math.map(sliderYellow, 0, 100, 131, 262)
+        // music.ringTone(Math.map(sliderYellow, 0, 100, 131, 262))
+        // music.setPlayTone(Math.map(sliderYellow, 0, 100, 131, 262),500)
+        serial.writeValue("hz", hz)
+        music.playTone(hz, music.beat(BeatFraction.Whole))
     } else {
         serial.writeValue("hz", 0)
     }
