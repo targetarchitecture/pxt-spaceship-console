@@ -2,6 +2,7 @@ function setVolumes () {
     RainbowSparkleUnicorn.Sound.setVolume(Math.map(100 - sliderOrange, 0, 100, 0, 30))
     music.setVolume(Math.map(sliderOrange, 0, 100, 0, 255))
 }
+
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P3, function () {
     RainbowSparkleUnicorn.comment("Press white spinner to warp back to yellow")
     consoleState = ConsoleStates.YellowAlert
@@ -11,6 +12,18 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P3, function () {
 
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P9, function () {
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Red Button")
+})
+
+RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P0, function () {
+    RainbowSparkleUnicorn.comment("Press red spinner to warp back to green")
+    consoleState = ConsoleStates.Normal
+    basic.pause(100)
+    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Normal")
+    basic.showIcon(IconNames.Butterfly)
+})
+
+RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
+    sortOutFuelLights()
 })
 
 control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
@@ -34,9 +47,11 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
     sortOutFuelLights()
 })
+
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P10, function () {
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Green Button")
 })
+
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P1, function () {
     consoleState = ConsoleStates.RedAlert
     basic.pause(100)
@@ -45,9 +60,11 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P1, function () {
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P11, function () {
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Blue Button")
 })
+
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P13, function () {
     sortOutFuelLights()
 })
+
 function sortOutFuelLights () {
     if (IoTConnected == true) {
         basic.clearScreen()
@@ -61,17 +78,8 @@ function sortOutFuelLights () {
         }
     }
 }
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P0, function () {
-    RainbowSparkleUnicorn.comment("Press red spinner to warp back to green")
-    consoleState = ConsoleStates.Normal
-    basic.pause(100)
-    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Normal")
-    basic.showIcon(IconNames.Butterfly)
-})
 
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
-    sortOutFuelLights()
-})
+
 
 let circularLightLoopPauseMs = 0
 let alertStripLeft: neopixel.Strip = null
