@@ -8,9 +8,11 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P3, function () {
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Yellow Alert")
     basic.showIcon(IconNames.StickFigure)
 })
+
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P9, function () {
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Red Button")
 })
+
 control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     // Pink Right Light
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P13)
@@ -64,12 +66,13 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P0, function () {
     consoleState = ConsoleStates.Normal
     basic.pause(100)
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Normal")
-    soundExpression.soaring.playUntilDone()
     basic.showIcon(IconNames.Butterfly)
 })
+
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
     sortOutFuelLights()
 })
+
 let circularLightLoopPauseMs = 0
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
