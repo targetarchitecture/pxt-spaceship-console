@@ -5,10 +5,11 @@ function setVolumes () {
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P3, function () {
     RainbowSparkleUnicorn.comment("Press white spinner to warp back to yellow")
     consoleState = ConsoleStates.YellowAlert
-RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Yellow Alert")
-    basic.showIcon(IconNames.StickFigure)
+basic.showNumber(3)
+    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Yellow Alert")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P9, function () {
+    basic.showNumber(9)
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Red Button")
 })
 control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
@@ -33,17 +34,20 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     sortOutFuelLights()
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P10, function () {
+    basic.showNumber(10)
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Green Button")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P1, function () {
     consoleState = ConsoleStates.RedAlert
-basic.pause(100)
+basic.showNumber(1)
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Red Alert")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P11, function () {
+    basic.showNumber(11)
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Blue Button")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P13, function () {
+    basic.showNumber(13)
     sortOutFuelLights()
 })
 function sortOutFuelLights () {
@@ -62,11 +66,11 @@ function sortOutFuelLights () {
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P0, function () {
     RainbowSparkleUnicorn.comment("Press red spinner to warp back to green")
     consoleState = ConsoleStates.Normal
-basic.pause(100)
+basic.showNumber(0)
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Normal")
-    basic.showIcon(IconNames.Butterfly)
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
+    basic.showNumber(8)
     sortOutFuelLights()
 })
 let circularLightLoopPauseMs = 0
@@ -104,6 +108,17 @@ EventBusValue.MICROBIT_EVT_ANY
 )
 consoleState = ConsoleStates.Normal
 basic.showIcon(IconNames.Yes)
+basic.forever(function () {
+    RainbowSparkleUnicorn.comment("This loop controls the gauge")
+    if (consoleState == ConsoleStates.Normal) {
+        RainbowSparkleUnicorn.comment("232 is 3v on to 0-255 scale")
+        RainbowSparkleUnicorn.Controls.dial1(randint(0, 232))
+        basic.pause(1000)
+    } else {
+        RainbowSparkleUnicorn.Controls.dial1(0)
+        basic.pause(2000)
+    }
+})
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
     horizonLevelAngle = 110
@@ -244,15 +259,4 @@ basic.forever(function () {
     stateInCircularLightLoop = consoleState
     RainbowSparkleUnicorn.comment("pause for how long...")
     basic.pause(circularLightLoopPauseMs)
-})
-basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop controls the gauge")
-    if (consoleState == ConsoleStates.Normal) {
-        RainbowSparkleUnicorn.comment("232 is 3v on to 0-255 scale")
-        RainbowSparkleUnicorn.Controls.dial1(randint(0, 232))
-        basic.pause(1000)
-    } else {
-        RainbowSparkleUnicorn.Controls.dial1(0)
-        basic.pause(2000)
-    }
 })
