@@ -1,7 +1,3 @@
-function setVolumes () {
-    RainbowSparkleUnicorn.Sound.setVolume(Math.map(100 - sliderOrange, 0, 100, 0, 30))
-    music.setVolume(Math.map(sliderOrange, 0, 100, 0, 255))
-}
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P3, function () {
     RainbowSparkleUnicorn.comment("Press white spinner to warp back to yellow")
     consoleState = ConsoleStates.YellowAlert
@@ -70,17 +66,16 @@ basic.showNumber(0)
     RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Normal")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
-    basic.showNumber(8)
     sortOutFuelLights()
 })
 let circularLightLoopPauseMs = 0
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
+let sliderOrange = 0
 let hz = 0
 let sliderYellow = 0
 let horizonTiming = 0
-let sliderOrange = 0
 let IoTConnected = false
 enum ConsoleStates {Starting , Normal, VideoPlaying, YellowAlert, RedAlert}
 let stateInCircularLightLoop = ConsoleStates.Starting
@@ -180,12 +175,6 @@ basic.forever(function () {
     basic.pause(1000)
 })
 basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop reads the slider values")
-    basic.pause(500)
-    if (sliderOrange != RainbowSparkleUnicorn.Controls.Slider1()) {
-        sliderOrange = RainbowSparkleUnicorn.Controls.Slider1()
-        setVolumes()
-    }
     RainbowSparkleUnicorn.comment("When the slider moves play a note")
     if (sliderYellow != RainbowSparkleUnicorn.Controls.Slider2()) {
         sliderYellow = RainbowSparkleUnicorn.Controls.Slider2()
@@ -194,11 +183,17 @@ basic.forever(function () {
         // music.setPlayTone(Math.map(sliderYellow, 0, 100, 131, 262),500)
         // serial.writeValue("hz", hz)
         music.playTone(hz, music.beat(BeatFraction.Half))
-    } else {
-        serial.writeValue("hz", 0)
     }
-    serial.writeValue("yellow", RainbowSparkleUnicorn.Controls.Slider2())
-    serial.writeValue("orange", RainbowSparkleUnicorn.Controls.Slider1())
+    basic.pause(500)
+})
+basic.forever(function () {
+    RainbowSparkleUnicorn.comment("This loop controls the volume")
+    sliderOrange = RainbowSparkleUnicorn.Controls.Slider1()
+    // setVolumes()
+    serial.writeValue("sliderOrange", sliderOrange)
+    RainbowSparkleUnicorn.Sound.setVolume(Math.map(100 - sliderOrange, 0, 100, 0, 30))
+    music.setVolume(Math.map(sliderOrange, 0, 100, 0, 255))
+    basic.pause(1000)
 })
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the circular lights")
