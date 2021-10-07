@@ -13,18 +13,22 @@ let touchStatus = ""
 let IoTConnected = false
 let consoleState = "Starting"
 // enum ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }
-let stateInCircularLightLoop = consoleState
-let stateInCircularSoundLoop = consoleState
+let stateInCircularLightLoop = ""
+let stateInCircularSoundLoop = ""
 basic.showNumber(1)
 RainbowSparkleUnicorn.start()
 basic.showNumber(2)
 RainbowSparkleUnicorn.Sound.setVolume(5)
-RainbowSparkleUnicorn.Light.turnAllOff()
+RainbowSparkleUnicorn.Sound.stop();
+
+RainbowSparkleUnicorn.Light.turnAllOff();
 // This is the big red button
 RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
 RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
-music.setBuiltInSpeakerEnabled(true)
-RainbowSparkleUnicorn.Sound.playTrack(1)
+
+soundControl();
+//music.setBuiltInSpeakerEnabled(true)
+
 basic.showNumber(3)
 IoTConnected = false
 consoleState = "Normal"
@@ -42,6 +46,7 @@ basic.forever(function () {
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the volume")
     volumeControl();
+    basic.pause(1000)
 })
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
@@ -54,4 +59,13 @@ basic.forever(function () {
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the sounds")
     soundControl();
+    RainbowSparkleUnicorn.comment("pause for how long...")
+    basic.pause(1000)
+})
+
+basic.forever(function () {
+    RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
+    sortOutFuelLights();
+    RainbowSparkleUnicorn.comment("pause for how long...")
+    basic.pause(500)
 })

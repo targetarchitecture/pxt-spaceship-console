@@ -1,8 +1,8 @@
 // Add your code here
 
-function soundControl(){
+function soundControl() {
 
-  
+    serial.writeLine("stateInCircularSoundLoop:" + stateInCircularSoundLoop + " consoleState:" + consoleState)
 
     if (stateInCircularSoundLoop != consoleState) {
         if (consoleState == "Normal") {
@@ -12,7 +12,22 @@ function soundControl(){
         } else if (consoleState == "YellowAlert") {
             RainbowSparkleUnicorn.Sound.playTrack(3)
         } else if (consoleState == "RedAlert") {
+            RainbowSparkleUnicorn.Sound.playTrack(4)
+        } else if (consoleState == "Starting") {
             RainbowSparkleUnicorn.Sound.playTrack(1)
+
+            basic.showIcon(IconNames.Heart)
+            while (true){
+                basic.pause(1000);
+
+                serial.writeLine("playingSound:" +  RainbowSparkleUnicorn.Sound.playingSound());
+
+                if (RainbowSparkleUnicorn.Sound.playingSound() == false) {
+                    break;
+                }                
+            }
+           // basic.pause(24000)
+            basic.showIcon(IconNames.Asleep)
         }
     } else {
         if (stateInCircularSoundLoop == "Starting") {
@@ -32,6 +47,5 @@ function soundControl(){
     }
     RainbowSparkleUnicorn.comment("set the loop state to be the same as the console state as we have done the transition")
     stateInCircularSoundLoop = consoleState
-    RainbowSparkleUnicorn.comment("pause for how long...")
-    basic.pause(1000)
+
 }
