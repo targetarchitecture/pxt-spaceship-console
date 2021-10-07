@@ -1,24 +1,41 @@
 // Add your code here
 
+let circularLightLoopPauseMs = 0
+let alertStripLeft: neopixel.Strip = null
+let alertStripRight: neopixel.Strip = null
+let strip: neopixel.Strip = null
+let stateInCircularLightLoop = ""
+
 function ringLights() {
 
     if (strip == null) {
-        RainbowSparkleUnicorn.comment("Setup green lights")
+
+        serial.writeLine("ring light 1")
+
+        RainbowSparkleUnicorn.comment("Setup starting rainbow and green lights")
         strip = neopixel.create(DigitalPin.P1, 24, NeoPixelMode.RGB)
         alertStripRight = strip.range(0, 6)
         alertStripLeft = strip.range(12, 6)
         strip.setBrightness(255)
-       
+
         alertStripRight.showRainbow();
         alertStripLeft.showRainbow();
 
-        for (let i = 0; i < 10; i++) {
+        //serial.writeLine("ring light 2")
 
-            alertStripLeft.rotate();
-            alertStripRight.rotate(-1);
+        let time_now = control.millis()
+
+        while (control.millis() < time_now + 15 * 1000) {
+
+            //serial.writeLine("ring light 3")
+
+            alertStripLeft.rotate(-1);
+            alertStripRight.rotate(1);
             strip.show();
-            basic.pause(1000)
+            basic.pause(250);
         }
+
+        //serial.writeLine("ring light 4")
 
         strip.showColor(neopixel.colors(NeoPixelColors.Green))
 
@@ -28,7 +45,7 @@ function ringLights() {
     circularLightLoopPauseMs = 1000
 
     RainbowSparkleUnicorn.comment("Need to check for a transition, so we can set up the lights")
-    
+
     if (stateInCircularLightLoop != consoleState) {
         circularLightLoopPauseMs = 10
         if (consoleState == "Normal") {

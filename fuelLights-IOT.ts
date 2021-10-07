@@ -1,4 +1,5 @@
 // Add your code here
+let IoTConnected = false
 
 function sortOutFuelLights() {
     

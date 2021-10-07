@@ -1,5 +1,7 @@
 // Add your code here
 
+let stateInCircularSoundLoop = ""
+
 function soundControl() {
 
     //serial.writeLine("stateInCircularSoundLoop:" + stateInCircularSoundLoop + " consoleState:" + consoleState)

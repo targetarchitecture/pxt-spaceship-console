@@ -18,11 +18,10 @@
         "volume.ts",
         "sounds.ts",
         "fuelLights-IOT.ts",
-        "buttons.ts"
+        "buttons.ts",
+        "start.ts"
     ],
-    "testFiles": [
-        "test.ts"
-    ],
+    "testFiles": [],
     "targetVersions": {
         "target": "4.0.11",
         "targetId": "microbit"
