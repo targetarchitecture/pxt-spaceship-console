@@ -11,7 +11,10 @@
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md"
+        "README.md",
+        "artificalHorizon.ts",
+        "pressureGauge.ts",
+        "ringLights.ts"
     ],
     "testFiles": [
         "test.ts"
