@@ -2,11 +2,11 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P3, function () {
     RainbowSparkleUnicorn.comment("Press white spinner to warp back to yellow")
     consoleState = ConsoleStates.YellowAlert
 basic.showNumber(3)
-    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Yellow Alert")
+    //RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Yellow Alert")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P9, function () {
     basic.showNumber(9)
-    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Red Button")
+    //RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Red Button")
 })
 control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     // Pink Right Light
@@ -15,15 +15,15 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
     // Pink Left Light
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
     RainbowSparkleUnicorn.Light.blink(lightPins.P14, 500, 500)
-    RainbowSparkleUnicorn.IoT.connectToInterWeb(
-    "152 2.4GHz",
-    "derwenthorpe",
-    "robotmqtt",
-    "public",
-    "public",
-    "Spaceship Console"
-    )
-    RainbowSparkleUnicorn.IoT.startReceivingMessages("spaceship-console/rx")
+    // RainbowSparkleUnicorn.IoT.connectToInterWeb(
+    // "152 2.4GHz",
+    // "derwenthorpe",
+    // "robotmqtt",
+    // "public",
+    // "public",
+    // "Spaceship Console"
+    // )
+    //RainbowSparkleUnicorn.IoT.startReceivingMessages("spaceship-console/rx")
     IoTConnected = true
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P13)
     RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
@@ -31,16 +31,16 @@ control.onEvent(5550, EventBusValue.MICROBIT_EVT_ANY, function () {
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P10, function () {
     basic.showNumber(10)
-    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Green Button")
+    //RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Green Button")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P1, function () {
     consoleState = ConsoleStates.RedAlert
 basic.showNumber(1)
-    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Red Alert")
+    //RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Red Alert")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P11, function () {
     basic.showNumber(11)
-    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Blue Button")
+    //RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Blue Button")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P13, function () {
     basic.showNumber(13)
@@ -63,7 +63,7 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P0, function () {
     RainbowSparkleUnicorn.comment("Press red spinner to warp back to green")
     consoleState = ConsoleStates.Normal
 basic.showNumber(0)
-    RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Normal")
+    //RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/alert", "Normal")
 })
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P8, function () {
     sortOutFuelLights()
@@ -83,13 +83,13 @@ let stateInCircularSoundLoop = ConsoleStates.Starting
 let consoleState = ConsoleStates.Starting
 basic.showNumber(1)
 RainbowSparkleUnicorn.start()
-RainbowSparkleUnicorn.printDebugMessages()
-RainbowSparkleUnicorn.printReceivedMessages()
+// RainbowSparkleUnicorn.printDebugMessages()
+// RainbowSparkleUnicorn.printReceivedMessages()
 basic.showNumber(2)
 RainbowSparkleUnicorn.Sound.setVolume(5)
 RainbowSparkleUnicorn.Light.turnAllOff()
-RainbowSparkleUnicorn.Controls.turnSlider1(OnOff.ON)
-RainbowSparkleUnicorn.Controls.turnSlider2(OnOff.ON)
+//RainbowSparkleUnicorn.Controls.turnSlider1(OnOff.ON)
+//RainbowSparkleUnicorn.Controls.turnSlider2(OnOff.ON)
 // This is the big red button
 RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
 let horizonLevelAngle = 110
