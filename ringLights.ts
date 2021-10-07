@@ -8,7 +8,20 @@ function ringLights() {
         alertStripRight = strip.range(0, 6)
         alertStripLeft = strip.range(12, 6)
         strip.setBrightness(255)
+       
+        alertStripRight.showRainbow();
+        alertStripLeft.showRainbow();
+
+        for (let i = 0; i < 10; i++) {
+
+            alertStripLeft.rotate();
+            alertStripRight.rotate(-1);
+            strip.show();
+            basic.pause(1000)
+        }
+
         strip.showColor(neopixel.colors(NeoPixelColors.Green))
+
         strip.show()
     }
 
@@ -34,7 +47,6 @@ function ringLights() {
             alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Yellow))
         } else if (consoleState == "RedAlert") {
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            alertStripRight.setBrightness(255)
             alertStripRight.setBrightness(255)
             alertStripRight.showColor(neopixel.colors(NeoPixelColors.Red))
             alertStripLeft.showColor(neopixel.colors(NeoPixelColors.Red))

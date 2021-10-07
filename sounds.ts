@@ -2,7 +2,7 @@
 
 function soundControl() {
 
-    serial.writeLine("stateInCircularSoundLoop:" + stateInCircularSoundLoop + " consoleState:" + consoleState)
+    //serial.writeLine("stateInCircularSoundLoop:" + stateInCircularSoundLoop + " consoleState:" + consoleState)
 
     if (stateInCircularSoundLoop != consoleState) {
         if (consoleState == "Normal") {
@@ -14,20 +14,15 @@ function soundControl() {
         } else if (consoleState == "RedAlert") {
             RainbowSparkleUnicorn.Sound.playTrack(4)
         } else if (consoleState == "Starting") {
+            RainbowSparkleUnicorn.comment("Opening sequence sound")
             RainbowSparkleUnicorn.Sound.playTrack(1)
 
-            basic.showIcon(IconNames.Heart)
             while (true){
-                basic.pause(1000);
-
-                serial.writeLine("playingSound:" +  RainbowSparkleUnicorn.Sound.playingSound());
-
+                basic.pause(500);
                 if (RainbowSparkleUnicorn.Sound.playingSound() == false) {
                     break;
                 }                
             }
-           // basic.pause(24000)
-            basic.showIcon(IconNames.Asleep)
         }
     } else {
         if (stateInCircularSoundLoop == "Starting") {
