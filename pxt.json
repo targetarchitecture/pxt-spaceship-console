@@ -16,7 +16,9 @@
         "pressureGauge.ts",
         "ringLights.ts",
         "volume.ts",
-        "sounds.ts"
+        "sounds.ts",
+        "fuelLights-IOT.ts",
+        "buttons.ts"
     ],
     "testFiles": [
         "test.ts"
