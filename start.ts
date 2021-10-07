@@ -4,13 +4,11 @@ let switchStatus = ""
 let touchStatus = ""
 let consoleState = ""
 let sliderOrange = 0
-let horizonTiming = 0
 
-function startUp(){
 
-    /**
- * enum ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }
- */
+function startUp() {
+
+    RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }");
 
     consoleState = "Starting"
     basic.showNumber(1)
@@ -19,15 +17,18 @@ function startUp(){
     RainbowSparkleUnicorn.Sound.setVolume(5)
     RainbowSparkleUnicorn.Sound.stop()
     RainbowSparkleUnicorn.Light.turnAllOff()
-    // This is the big red button
-    RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
     RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
-    //soundControl();
-    //ringLights();
 
-    basic.showNumber(3)
-    IoTConnected = false
-    consoleState = "Normal"
-    basic.showIcon(IconNames.Yes)
+    RainbowSparkleUnicorn.comment("This is the big red button")
+    RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
 
+    RainbowSparkleUnicorn.comment("the runInParallel command allows us to delay switching the console state to Normal and letting the multiple loops work")
+    control.runInParallel(function () {
+        basic.pause(5000)
+
+        basic.showNumber(3)
+
+        consoleState = "Normal"
+        basic.showIcon(IconNames.Yes)
+    })
 }

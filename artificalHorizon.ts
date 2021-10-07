@@ -1,6 +1,7 @@
 // Add your code here
 
 let horizonLevelAngle = 110;
+let horizonTiming = 0;
 
 function artificialHorizon(){
     

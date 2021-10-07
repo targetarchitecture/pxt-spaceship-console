@@ -10,7 +10,7 @@ function ringLights() {
 
     if (strip == null) {
 
-        serial.writeLine("ring light 1")
+        //serial.writeLine("ring light 1")
 
         RainbowSparkleUnicorn.comment("Setup starting rainbow and green lights")
         strip = neopixel.create(DigitalPin.P1, 24, NeoPixelMode.RGB)

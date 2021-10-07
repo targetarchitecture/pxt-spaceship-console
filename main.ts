@@ -26,12 +26,10 @@ basic.forever(function () {
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the sounds")
     soundControl();
-    RainbowSparkleUnicorn.comment("pause for how long...")
     basic.pause(1000)
 })
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
     sortOutFuelLights();
-    RainbowSparkleUnicorn.comment("pause for how long...")
     basic.pause(500)
 })
