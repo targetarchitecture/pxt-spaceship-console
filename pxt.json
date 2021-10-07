@@ -14,7 +14,9 @@
         "README.md",
         "artificalHorizon.ts",
         "pressureGauge.ts",
-        "ringLights.ts"
+        "ringLights.ts",
+        "volume.ts",
+        "sounds.ts"
     ],
     "testFiles": [
         "test.ts"
