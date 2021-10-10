@@ -19,7 +19,8 @@
         "sounds.ts",
         "fuelLights-IOT.ts",
         "buttons.ts",
-        "start.ts"
+        "start.ts",
+        "events.ts"
     ],
     "testFiles": [],
     "targetVersions": {
