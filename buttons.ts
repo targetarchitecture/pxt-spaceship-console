@@ -1,3 +1,7 @@
+
+let switchStatus = ""
+let touchStatus = ""
+
 // RainbowSparkleUnicorn.IoT.sendMQTTMessage("spaceship-console/buttons", "Green Button")
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.P10, function () {
     basic.showNumber(10)

@@ -1,6 +1,6 @@
 // Add your code here
 
-let circularLightLoopPauseMs = 0
+let circularLightLoopPauseMs = 1000
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
@@ -41,8 +41,6 @@ function ringLights() {
 
         strip.show()
     }
-
-    circularLightLoopPauseMs = 1000
 
     RainbowSparkleUnicorn.comment("Need to check for a transition, so we can set up the lights")
 

@@ -1,10 +1,7 @@
 // Add your code here
 
-let switchStatus = ""
-let touchStatus = ""
-let consoleState = ""
-let sliderOrange = 0
 
+let consoleState = ""
 
 function startUp() {
 
@@ -14,8 +11,10 @@ function startUp() {
     basic.showNumber(1)
     RainbowSparkleUnicorn.start()
     basic.showNumber(2)
-    RainbowSparkleUnicorn.Sound.setVolume(5)
-    RainbowSparkleUnicorn.Sound.stop()
+
+    RainbowSparkleUnicorn.Sound.stop();
+    volumeControl();
+
     RainbowSparkleUnicorn.Light.turnAllOff()
     RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
 
