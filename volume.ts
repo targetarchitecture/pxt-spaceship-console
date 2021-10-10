@@ -1,13 +1,13 @@
 // Add your code here
-let volumeMapped = 0
+let volumeMapped = -1
 
 function volumeControl() {
     let volume = 1023 - pins.analogReadPin(AnalogPin.P0);
     let tempVol = Math.round(Math.map(volume, 0, 1023, 0, 30));
     if (volumeMapped != tempVol) {
         volumeMapped = tempVol;
-        music.setVolume(volumeMapped);
-        serial.writeValue("vol", volumeMapped);
+        RainbowSparkleUnicorn.Sound.setVolume(volumeMapped);
+        //serial.writeValue("vol", volumeMapped);
     }
 }
 
