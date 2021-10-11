@@ -11,6 +11,8 @@ RainbowSparkleUnicorn.Sound.onBusyChange(function () {
 
     let notBusy = control.eventValue();
 
+    serial.writeLine("onBusyChange:" + notBusy);  
+
     if (notBusy == 1) {
         RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(50, 52));
         basic.pause(500);

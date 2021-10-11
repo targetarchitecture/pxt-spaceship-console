@@ -34,9 +34,9 @@ function startUp() {
     })
 
     RainbowSparkleUnicorn.comment("This is the big red button")
-    RainbowSparkleUnicorn.Light.turnOn(lightPins.P0) 
+    RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
 
-    basic.showNumber(5)
+    basic.showIcon(IconNames.Happy)
 
     consoleState = "Normal"
 }

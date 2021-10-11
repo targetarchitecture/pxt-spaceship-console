@@ -3,23 +3,22 @@ let IoTConnected = false
 
 function sortOutFuelLights() {
 
-    // basic.clearScreen()
-    RainbowSparkleUnicorn.Light.turnOff(lightPins.P13)
-    RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
+    let P7 = RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P7);
+    let P12 = RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P12);
 
-    let switch8 = RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P7);
-    let switch13 = RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P12);
+    if (P7 == "L") {
+        RainbowSparkleUnicorn.Light.turnOn(lightPins.P13)
+        RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
+    }
 
-    //serial.writeLine("8=" + switch8);
-   // serial.writeLine("13=" + switch13);
+    if (P12 == "L") {
+        RainbowSparkleUnicorn.Light.turnOn(lightPins.P14)
+        RainbowSparkleUnicorn.Light.turnOff(lightPins.P13)
+    }
 
-    // if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P8) == "H") {
-    //     RainbowSparkleUnicorn.Light.turnOn(lightPins.P13)
-    // }
-
-    // if (RainbowSparkleUnicorn.Switch.getSwitchState(switchPins.P13) == "H") {
-    //     RainbowSparkleUnicorn.Light.turnOn(lightPins.P14)
-    // }
-
+    if (P12 == "H" && P7 == "H") {
+        RainbowSparkleUnicorn.Light.turnOff(lightPins.P13)
+        RainbowSparkleUnicorn.Light.turnOff(lightPins.P14)
+    }
 }
 
