@@ -2,9 +2,17 @@
 
 function soundControl() {
 
-    if (RainbowSparkleUnicorn.Sound.playingSound() == false) {
+    let playingSound = RainbowSparkleUnicorn.Sound.playingSound();
+
+    //serial.writeLine("playingSound:" + playingSound);
+}
+
+RainbowSparkleUnicorn.Sound.onBusyChange(function () {
+
+    let notBusy = control.eventValue();
+
+    if (notBusy == 1) {
         RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(50, 52));
         basic.pause(500);
     }
-}
-
+})

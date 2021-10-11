@@ -25,14 +25,8 @@ function ringLights() {
     strip.show();
 
     let shields = pins.analogReadPin(AnalogPin.P2);
-    //let sheildsMap = Math.round(Math.map(shields, 20, 985, 50, 1000));
-
-    //serial.writeValue("shields", shields);
-    //serial.writeValue("sheildsMap", sheildsMap);
 
     basic.pause(shields);
-
-    //basic.pause(250);
 }
 
 function setColour(rgb: number) {

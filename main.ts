@@ -1,34 +1,56 @@
 startUp();
 
-basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop controls the volume")
-    volumeControl();
-    basic.pause(250)
-})
+let previouspressureGaugeMillis = 0;
+let previousSoundControlMillis = 0;
+let previousFuelLightMillis = 0;
+let previousvolumeControlMillis = 0;
+let previousSwitchStatesMillis = 0;
+
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
     artificialHorizon();
 })
-basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop controls the pressure gauge")
-    pressureGauge();
-    basic.pause(1000)
-})
-basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop controls the sounds")
-    soundControl();
-    basic.pause(1000)
-})
-basic.forever(function () {
-    RainbowSparkleUnicorn.Switch.getSwitchStates()
-    basic.pause(100)
-})
-basic.forever(function () {
-    RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
-    sortOutFuelLights();
-    basic.pause(500)
-})
+
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the circular lights")
     ringLights();
 })
+
+RainbowSparkleUnicorn.comment("This is the main fixed timing loop")
+basic.forever(function () {
+
+    let currentMillis = control.millis()
+
+    RainbowSparkleUnicorn.comment("This controls the pressure gauge")
+    if (currentMillis - previouspressureGaugeMillis > 1000) {
+        previouspressureGaugeMillis = currentMillis;
+        pressureGauge();
+    }
+
+    RainbowSparkleUnicorn.comment("This loop controls the sounds")
+    if (currentMillis - previousSoundControlMillis > 1000) {
+        previousSoundControlMillis = currentMillis;
+        soundControl();
+    }    
+
+    RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
+    if (currentMillis - previousFuelLightMillis > 500) {
+        previousFuelLightMillis = currentMillis;
+        sortOutFuelLights();
+    }
+
+    RainbowSparkleUnicorn.comment("This loop controls the volume")
+    if (currentMillis - previousvolumeControlMillis > 250) {
+        previousvolumeControlMillis = currentMillis;
+        volumeControl();
+    }
+
+    RainbowSparkleUnicorn.comment("This loop controls the switch states")
+    if (currentMillis - previousSwitchStatesMillis > 100) {
+        previousSwitchStatesMillis = currentMillis;
+        RainbowSparkleUnicorn.Switch.getSwitchStates()
+    }
+
+    basic.pause(50);
+})
+
