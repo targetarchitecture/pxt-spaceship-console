@@ -27,9 +27,9 @@ function startUp() {
 
     //set artificial horizon
     control.runInParallel(function () {
-        RainbowSparkleUnicorn.Movement.setServoAngle(Servo.P8, horizonLevelAngle)
+        RainbowSparkleUnicorn.Movement.setServoAngle(horizonServo, horizonLevelAngle)
         basic.pause(500)
-        RainbowSparkleUnicorn.Movement.moveServoLinear(Servo.P8, horizonLevelAngle, horizonLevelAngle - 30, 2)
+        RainbowSparkleUnicorn.Movement.moveServoLinear(horizonServo, horizonLevelAngle, horizonLevelAngle - 30, 2)
         basic.pause(2500)
     })
 
