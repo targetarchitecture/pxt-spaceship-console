@@ -27,7 +27,7 @@ basic.forever(function () {
 })
 basic.forever(function () {    
     switchStatus = RainbowSparkleUnicorn.Switch.getSwitchStates()
-    serial.writeLine("SS:" + switchStatus);
+    //serial.writeLine("SS:" + switchStatus);
     basic.pause(1000); 
 })
 basic.forever(function () {
