@@ -23,9 +23,13 @@ function startUp() {
 
     RainbowSparkleUnicorn.comment("the runInParallel command allows us to delay switching the console state to Normal and letting the multiple loops work")
     control.runInParallel(function () {
-        basic.pause(5000)
 
         basic.showNumber(3)
+
+        RainbowSparkleUnicorn.comment("Opening sequence sound")
+        RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(1,2))
+
+        basic.showNumber(4)
 
         consoleState = "Normal"
         basic.showIcon(IconNames.Yes)

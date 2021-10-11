@@ -6,7 +6,7 @@
         "microphone": "*",
         "neopixel": "github:microsoft/pxt-neopixel#v0.7.3",
         "ws2812b": "github:microsoft/pxt-ws2812b#v0.1.1",
-        "Rainbow Sparkle Unicorn": "github:targetarchitecture/pxt-rainbow-sparkle-unicorn#v2.0.6"
+        "Rainbow Sparkle Unicorn": "github:targetarchitecture/pxt-rainbow-sparkle-unicorn#v2.0.10"
     },
     "files": [
         "main.blocks",
@@ -19,7 +19,8 @@
         "sounds.ts",
         "fuelLights-IOT.ts",
         "buttons.ts",
-        "start.ts"
+        "start.ts",
+        "soundtrack.md"
     ],
     "testFiles": [],
     "targetVersions": {
