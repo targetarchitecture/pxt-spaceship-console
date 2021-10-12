@@ -1,24 +1,30 @@
+let previousSwitchStatesMillis = 0
+let previousvolumeControlMillis = 0
+let previousFuelLightMillis = 0
+let previousSoundControlMillis = 0
+let previouspressureGaugeMillis = 0
 
-function loop() {
+basic.forever(function () {
+    RainbowSparkleUnicorn.comment("This loop controls the circular lights")
+    ringLights();
+})
 
-    let previousSwitchStatesMillis = 0
-    let previousvolumeControlMillis = 0
-    let previousFuelLightMillis = 0
-    let previousSoundControlMillis = 0
-    let previouspressureGaugeMillis = 0
+basic.forever(function () {
+    RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
 
-    basic.forever(function () {
-        RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
+    //don't do anything until start has completed
+    if (consoleState.compare("Starting") != 0) {
         artificialHorizon();
-    })
+    } else {
+        basic.pause(500);
+    }
+})
 
-    basic.forever(function () {
-        RainbowSparkleUnicorn.comment("This loop controls the circular lights")
-        ringLights();
-    })
+RainbowSparkleUnicorn.comment("This is the main fixed timing loop")
+basic.forever(function () {
 
-    RainbowSparkleUnicorn.comment("This is the main fixed timing loop")
-    basic.forever(function () {
+    //don't do anything until start has completed
+    if (consoleState.compare("Starting") != 0) {
 
         RainbowSparkleUnicorn.comment("This controls the pressure gauge")
         if (control.millis() - previouspressureGaugeMillis > 1000) {
@@ -49,7 +55,13 @@ function loop() {
             previousSwitchStatesMillis = control.millis();
             RainbowSparkleUnicorn.Switch.getSwitchStates()
         }
+    }
+    //serial.writeLine("T2:" + control.millis())
 
-        basic.pause(50);
-    })
-}
+    //LED toggle takes two milliseconds
+    led.toggle(0, 0);
+
+    //serial.writeLine("T3:" + control.millis())
+
+    basic.pause(25);
+})

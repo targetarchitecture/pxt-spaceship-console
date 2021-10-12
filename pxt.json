@@ -18,7 +18,6 @@
         "volume.ts",
         "sounds.ts",
         "buttons.ts",
-        "start.ts",
         "soundtrack.md",
         "fuelLights.ts",
         "loop.ts"
