@@ -1,11 +1,14 @@
 
-let fuelbuttonsSet = false;
 
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.Any, function () {
-
     let pin = control.eventValue();
 
-    serial.writeLine("switch pressed:" + pin)
+    dealWithButtonPress(pin);
+})
+
+function dealWithButtonPress(pin: number) {
+
+    //serial.writeLine("switch pressed:" + pin)
 
     if (pin == switchPins.P0) {
         RainbowSparkleUnicorn.comment("Red Spinner")
@@ -61,15 +64,6 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.Any, function () {
         setColour(neopixel.colors(NeoPixelColors.Blue));
         consoleState = "Normal"
     }
-    // else if (pin == switchPins.P8 || pin == switchPins.P13) {
-
-    //     //this prevents the button from firing on the first event handler
-    //     if (fuelbuttonsSet == true) {
-    //         RainbowSparkleUnicorn.Sound.playTrack(23)
-    //     }
-
-    //     fuelbuttonsSet = true;
-    // } 
     else if (pin == switchPins.P14) {
         RainbowSparkleUnicorn.Sound.playTrack(21)
         setColour(neopixel.colors(NeoPixelColors.Blue));
@@ -77,5 +71,5 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.Any, function () {
     else {
         serial.writeLine("missing switch pin:" + pin);
     }
+}
 
-})
