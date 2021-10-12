@@ -19,43 +19,33 @@ basic.forever(function () {
 RainbowSparkleUnicorn.comment("This is the main fixed timing loop")
 basic.forever(function () {
 
-    let currentMillis = control.millis()
-
     RainbowSparkleUnicorn.comment("This controls the pressure gauge")
-    if (currentMillis - previouspressureGaugeMillis > 1000) {
-        previouspressureGaugeMillis = currentMillis;
+    if (control.millis() - previouspressureGaugeMillis > 1000) {
+        previouspressureGaugeMillis = control.millis();
         pressureGauge();
     }
 
-    //currentMillis = control.millis()
-
     RainbowSparkleUnicorn.comment("This loop controls the sounds")
-    if (currentMillis - previousSoundControlMillis > 500) {
-        previousSoundControlMillis = currentMillis;
+    if (control.millis() - previousSoundControlMillis > 500) {
+        previousSoundControlMillis = control.millis();
         soundControl();
     }
 
-    //currentMillis = control.millis()
-
     RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
-    if (currentMillis - previousFuelLightMillis > 200) {
-        previousFuelLightMillis = currentMillis;
+    if (control.millis() - previousFuelLightMillis > 200) {
+        previousFuelLightMillis = control.millis();
         sortOutFuelLights();
     }
 
-    //currentMillis = control.millis()
-
     RainbowSparkleUnicorn.comment("This loop controls the volume")
-    if (currentMillis - previousvolumeControlMillis > 250) {
-        previousvolumeControlMillis = currentMillis;
+    if (control.millis() - previousvolumeControlMillis > 250) {
+        previousvolumeControlMillis = control.millis();
         volumeControl();
     }
 
-    //currentMillis = control.millis()
-
     RainbowSparkleUnicorn.comment("This loop controls the switch states")
-    if (currentMillis - previousSwitchStatesMillis > 100) {
-        previousSwitchStatesMillis = currentMillis;
+    if (control.millis() - previousSwitchStatesMillis > 100) {
+        previousSwitchStatesMillis = control.millis();
         RainbowSparkleUnicorn.Switch.getSwitchStates()
     }
 
