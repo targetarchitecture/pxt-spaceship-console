@@ -68,7 +68,7 @@ function loop() {
             }
 
             RainbowSparkleUnicorn.comment("This loop sends out debug info")
-            if (control.millis() - previouslastFreeBytesMillis > 1000) {
+            if (control.millis() - previouslastFreeBytesMillis > 10000) {
                 serial.writeValue("lastFreeBytes",    control.gcStats().lastFreeBytes);
                 previouslastFreeBytesMillis = control.millis();
             }
