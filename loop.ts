@@ -4,6 +4,14 @@ let previousFuelLightMillis = 0
 let previousSoundControlMillis = 0
 let previouspressureGaugeMillis = 0
 
+input.onButtonPressed(Button.A, function() {    
+    basic.showIcon(IconNames.Heart)
+})
+
+input.onButtonPressed(Button.B, function () {
+    basic.showIcon(IconNames.SmallHeart)
+})
+
 basic.forever(function () {
     RainbowSparkleUnicorn.comment("This loop controls the circular lights")
     ringLights();
@@ -33,7 +41,7 @@ basic.forever(function () {
         }
 
         RainbowSparkleUnicorn.comment("This loop controls the sounds")
-        if (control.millis() - previousSoundControlMillis > 500) {
+        if (control.millis() - previousSoundControlMillis > 2000) {
             previousSoundControlMillis = control.millis();
             soundControl();
         }

@@ -1,5 +1,3 @@
-// Add your code here
-
 function soundControl() {
 
     let playingSound = RainbowSparkleUnicorn.Sound.playingSound();

@@ -56,10 +56,11 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.Any, function () {
     //     RainbowSparkleUnicorn.Sound.playTrack(21)
     //     setColour(neopixel.colors(NeoPixelColors.Blue));
     // }
-    // else if (pin == switchPins.P12) {
-    //     RainbowSparkleUnicorn.Sound.playTrack(21)
-    //     setColour(neopixel.colors(NeoPixelColors.Blue));
-    // }
+    else if (pin == switchPins.P12) {
+        RainbowSparkleUnicorn.Sound.playTrack(10)
+        setColour(neopixel.colors(NeoPixelColors.Blue));
+        consoleState = "Normal"
+    }
     // else if (pin == switchPins.P8 || pin == switchPins.P13) {
 
     //     //this prevents the button from firing on the first event handler

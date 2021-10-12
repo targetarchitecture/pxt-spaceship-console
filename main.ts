@@ -3,7 +3,9 @@ let consoleState = "Starting"
 RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }");
 
 basic.showNumber(1)
-RainbowSparkleUnicorn.start();
+
+RainbowSparkleUnicorn.comment("Default i2c timing is 10 milliseconds");
+RainbowSparkleUnicorn.start(20);
 
 RainbowSparkleUnicorn.Sound.stop();
 volumeControl();
@@ -33,3 +35,5 @@ RainbowSparkleUnicorn.Light.turnOn(lightPins.P0)
 basic.showIcon(IconNames.Happy)
 
 consoleState = "Normal"
+
+
