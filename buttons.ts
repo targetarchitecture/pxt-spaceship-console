@@ -7,6 +7,10 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.Any, function () {
 
     //basic.showNumber(pin);
 
+    //serial.writeLine("switch pressed:" + pin)
+
+    return;
+
     if (pin == switchPins.P0) {
         RainbowSparkleUnicorn.comment("Red Spinner")
         alertStripLeft.showRainbow()

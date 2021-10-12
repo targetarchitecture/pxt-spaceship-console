@@ -43,6 +43,8 @@ basic.forever(function () {
         sortOutFuelLights();
     }
 
+    //currentMillis = control.millis()
+
     RainbowSparkleUnicorn.comment("This loop controls the volume")
     if (currentMillis - previousvolumeControlMillis > 250) {
         previousvolumeControlMillis = currentMillis;
