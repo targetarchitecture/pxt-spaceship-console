@@ -11,10 +11,10 @@ RainbowSparkleUnicorn.Sound.onBusyChange(function () {
 
     let busy = control.eventValue();
 
-    serial.writeLine("onBusyChange:" + busy);
+   // serial.writeLine("onBusyChange:" + busy);
 
-    // if (busy == 0) {
-    //     RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(50, 52));
-    //     basic.pause(500);
-    // }
+    if (busy == 0) {
+        RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(50, 52));
+        basic.pause(500);
+    }
 })

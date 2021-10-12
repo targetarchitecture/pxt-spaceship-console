@@ -36,6 +36,4 @@ function startUp() {
     basic.showIcon(IconNames.Happy)
 
     consoleState = "Normal"
-
-    loop();
 }
