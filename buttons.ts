@@ -30,6 +30,7 @@ function dealWithButtonPress(pin: number) {
     }
     else if (pin == switchPins.P3) {
         RainbowSparkleUnicorn.comment("White Spinner")
+        RainbowSparkleUnicorn.Sound.playTrack(22)
         setColour(neopixel.colors(NeoPixelColors.Purple));
     }
     else if (pin == switchPins.P4) {
@@ -60,7 +61,7 @@ function dealWithButtonPress(pin: number) {
     //     setColour(neopixel.colors(NeoPixelColors.Blue));
     // }
     else if (pin == switchPins.P11) {
-        RainbowSparkleUnicorn.Sound.playTrack(10)
+        RainbowSparkleUnicorn.Sound.playTrack(23)
         setColour(neopixel.colors(NeoPixelColors.Blue));
         consoleState = "Normal"
     }
