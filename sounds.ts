@@ -4,17 +4,17 @@ function soundControl() {
 
     let playingSound = RainbowSparkleUnicorn.Sound.playingSound();
 
-    //serial.writeLine("playingSound:" + playingSound);
+    serial.writeLine("playingSound:" + playingSound);
 }
 
 RainbowSparkleUnicorn.Sound.onBusyChange(function () {
 
-    let notBusy = control.eventValue();
+    let busy = control.eventValue();
 
-    serial.writeLine("onBusyChange:" + notBusy);  
+    serial.writeLine("onBusyChange:" + busy);
 
-    if (notBusy == 1) {
-        RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(50, 52));
-        basic.pause(500);
-    }
+    // if (busy == 0) {
+    //     RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(50, 52));
+    //     basic.pause(500);
+    // }
 })

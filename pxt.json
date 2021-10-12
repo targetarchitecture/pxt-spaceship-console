@@ -6,7 +6,7 @@
         "microphone": "*",
         "neopixel": "github:microsoft/pxt-neopixel#v0.7.3",
         "ws2812b": "github:microsoft/pxt-ws2812b#v0.1.1",
-        "Rainbow Sparkle Unicorn": "github:targetarchitecture/pxt-rainbow-sparkle-unicorn#v2.0.13"
+        "Rainbow Sparkle Unicorn": "github:targetarchitecture/pxt-rainbow-sparkle-unicorn#v2.0.17"
     },
     "files": [
         "main.blocks",

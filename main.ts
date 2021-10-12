@@ -27,15 +27,15 @@ basic.forever(function () {
         pressureGauge();
     }
 
-    currentMillis = control.millis()
+    //currentMillis = control.millis()
 
     RainbowSparkleUnicorn.comment("This loop controls the sounds")
-    if (currentMillis - previousSoundControlMillis > 1000) {
+    if (currentMillis - previousSoundControlMillis > 500) {
         previousSoundControlMillis = currentMillis;
         soundControl();
     }
 
-    currentMillis = control.millis()
+    //currentMillis = control.millis()
 
     RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
     if (currentMillis - previousFuelLightMillis > 200) {
@@ -49,7 +49,7 @@ basic.forever(function () {
         volumeControl();
     }
 
-    currentMillis = control.millis()
+    //currentMillis = control.millis()
 
     RainbowSparkleUnicorn.comment("This loop controls the switch states")
     if (currentMillis - previousSwitchStatesMillis > 100) {
