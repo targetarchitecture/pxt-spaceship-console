@@ -1,10 +1,9 @@
-// Add your code here
 
 let circularLightLoopPauseMs = 1000
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
-let stateInCircularLightLoop = ""
+//let stateInCircularLightLoop = ""
 
 function ringLights() {
 

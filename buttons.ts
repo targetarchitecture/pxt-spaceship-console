@@ -56,7 +56,7 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.Any, function () {
     //     RainbowSparkleUnicorn.Sound.playTrack(21)
     //     setColour(neopixel.colors(NeoPixelColors.Blue));
     // }
-    else if (pin == switchPins.P12) {
+    else if (pin == switchPins.P11) {
         RainbowSparkleUnicorn.Sound.playTrack(10)
         setColour(neopixel.colors(NeoPixelColors.Blue));
         consoleState = "Normal"

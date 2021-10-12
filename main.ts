@@ -36,4 +36,4 @@ basic.showIcon(IconNames.Happy)
 
 consoleState = "Normal"
 
-
+loop();
