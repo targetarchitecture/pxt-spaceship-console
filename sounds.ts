@@ -4,7 +4,7 @@ function soundControl() {
 
     let playingSound = RainbowSparkleUnicorn.Sound.playingSound();
 
-    serial.writeLine("playingSound:" + playingSound);
+    //serial.writeLine("playingSound:" + playingSound);
 }
 
 RainbowSparkleUnicorn.Sound.onBusyChange(function () {

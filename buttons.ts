@@ -1,5 +1,5 @@
 
- let fuelbuttonsSet = false;
+let fuelbuttonsSet = false;
 
 RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.Any, function () {
 
@@ -47,21 +47,21 @@ RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.Any, function () {
         RainbowSparkleUnicorn.Sound.playTrack(70)
         setColour(neopixel.colors(NeoPixelColors.Red));
         consoleState = "RedAlert"
-    } 
+    }
     // else if (pin == switchPins.P10) {
     //     RainbowSparkleUnicorn.Sound.playTrack(20)
     //     setColour(neopixel.colors(NeoPixelColors.Green));
     //     consoleState = "Normal"
     // } 
-    else if (pin == switchPins.P7 || pin == switchPins.P12)  {
+    else if (pin == switchPins.P7 || pin == switchPins.P12) {
 
         //this prevents the button from firing on the first event handler
-        if (fuelbuttonsSet==true){
+        if (fuelbuttonsSet == true) {
             RainbowSparkleUnicorn.Sound.playTrack(23)
         }
 
         fuelbuttonsSet = true;
-    } 
+    }
     else {
         serial.writeLine("switch pin:" + pin);
     }

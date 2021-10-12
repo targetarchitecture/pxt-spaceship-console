@@ -1,6 +1,3 @@
-// Add your code here
-
-
 let consoleState = ""
 
 function startUp() {
@@ -39,4 +36,6 @@ function startUp() {
     basic.showIcon(IconNames.Happy)
 
     consoleState = "Normal"
+
+    loop();
 }
