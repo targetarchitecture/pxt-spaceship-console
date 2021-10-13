@@ -32,5 +32,16 @@
 70/001 - photon torpedo fire
 
 
+81/001 - ES_Space Hydraulic 2 - SFX Producer
+
+82/001 - ES_Space Pneumatic 1 - SFX Producer
+
+83/001 - ES_Space Pneumatic 2 - SFX Producer
+
+84/001 - ES_Thruster Blast 7 - SFX Producer
+
+85/001 - ES_Thruster Blast 50 - SFX Producer
+
+
 99/001 - ALIEN - Nostromo destruct sequence
 
