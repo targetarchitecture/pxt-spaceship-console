@@ -35,18 +35,6 @@ function loop() {
             previousvolumeControlMillis = control.millis();
             volumeControl();
         }
-
-        RainbowSparkleUnicorn.comment("This loop controls the switch states")
-        if (control.millis() - previousSwitchStatesMillis > 100) {
-            previousSwitchStatesMillis = control.millis();
-            RainbowSparkleUnicorn.Switch.getSwitchStates()
-        }
-
-        // RainbowSparkleUnicorn.comment("This loop sends out debug info")
-        // if (control.millis() - previouslastFreeBytesMillis > 10000) {
-        //     serial.writeValue("lastFreeBytes", control.gcStats().lastFreeBytes);
-        //     previouslastFreeBytesMillis = control.millis();
-        // }
     }
 
     //LED toggle takes two milliseconds
