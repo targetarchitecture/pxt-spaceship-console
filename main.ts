@@ -9,9 +9,9 @@ function start() {
 
     RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }");
 
-    basic.showNumber(1)
+    basic.showNumber(1);
 
-    RainbowSparkleUnicorn.comment("Default i2c timing is 10 milliseconds");
+    RainbowSparkleUnicorn.comment("Back to UART");
     RainbowSparkleUnicorn.start();
 
     RainbowSparkleUnicorn.Sound.stop();
@@ -19,19 +19,21 @@ function start() {
 
     basic.showNumber(2)
 
-    RainbowSparkleUnicorn.Light.turnAllOff()
+    RainbowSparkleUnicorn.Light.turnAllOff();
+
+    basic.showNumber(3)
 
     basic.forever(function () {
         RainbowSparkleUnicorn.comment("This loop controls the circular lights")
         ringLights();
     })
 
-    basic.showNumber(3)
+    basic.showNumber(4)
 
     RainbowSparkleUnicorn.comment("Opening sequence sound")
     RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(1, 2))
 
-    basic.showNumber(4)
+    basic.showNumber(5)
 
     //set artificial horizon
     basic.forever(function () {
@@ -48,10 +50,12 @@ function start() {
         }
     })
 
-    RainbowSparkleUnicorn.comment("This is the big red button")
-    RainbowSparkleUnicorn.Light.turnOn(P0)
+    basic.showNumber(6)
 
-    basic.showIcon(IconNames.Happy)
+    RainbowSparkleUnicorn.comment("This is the big red button")
+    RainbowSparkleUnicorn.Light.turnOn(RainbowSparkleUnicorn.Light.Pins.P0)
+
+    basic.showIcon(IconNames.Surprised)
 
     consoleState = "Normal"
 
@@ -67,17 +71,19 @@ function start() {
     })
 
     loops.everyInterval(200, function () {
-    RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
+        RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
         sortOutFuelLights();
     })
 
     loops.everyInterval(250, function () {
-    RainbowSparkleUnicorn.comment("This loop controls the volume")
+        RainbowSparkleUnicorn.comment("This loop controls the volume")
         volumeControl();
 
         //LED toggle takes two milliseconds - just helps me!
         led.toggle(0, 0);
     })
+
+    basic.showIcon(IconNames.Happy)
 }
 
 
