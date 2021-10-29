@@ -3,14 +3,13 @@ let circularLightLoopPauseMs = 1000
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
-//let stateInCircularLightLoop = ""
 
 function ringLights() {
 
     if (strip == null) {
 
         RainbowSparkleUnicorn.comment("Setup starting rainbow")
-        strip = neopixel.create(DigitalPin.P1, 24, NeoPixelMode.RGB)
+        strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
         alertStripRight = strip.range(0, 6)
         alertStripLeft = strip.range(12, 6)
         strip.setBrightness(255)
