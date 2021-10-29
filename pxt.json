@@ -20,7 +20,6 @@
         "buttons.ts",
         "soundtrack.md",
         "fuelLights.ts",
-        "loop.ts",
         "buttons.md"
     ],
     "testFiles": [],
