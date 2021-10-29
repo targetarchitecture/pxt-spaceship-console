@@ -1,4 +1,4 @@
-RainbowSparkleUnicorn.Switch.onSwitchPressed(switchPins.Any, function () {
+RainbowSparkleUnicorn.Switch.on(RainbowSparkleUnicorn.Switch.Pin.Any, RainbowSparkleUnicorn.Switch.Event.pressed , function () {
     let pin = control.eventValue();
 
     dealWithButtonPress(pin);
