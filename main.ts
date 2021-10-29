@@ -9,10 +9,14 @@ function start() {
 
     RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }");
 
-    basic.showNumber(1);
+    basic.showNumber(0);
 
     RainbowSparkleUnicorn.comment("Back to UART");
     RainbowSparkleUnicorn.start();
+
+    RainbowSparkleUnicorn.Light.turnAllOn();
+
+    basic.showNumber(1);
 
     RainbowSparkleUnicorn.Sound.stop();
     volumeControl();
@@ -65,10 +69,10 @@ function start() {
         pressureGauge();
     })
 
-    loops.everyInterval(2000, function () {
-        RainbowSparkleUnicorn.comment("This loop controls the sounds")
-        soundControl();
-    })
+    // loops.everyInterval(2000, function () {
+    //     RainbowSparkleUnicorn.comment("This loop controls the sounds")
+    //     soundControl();
+    // })
 
     loops.everyInterval(200, function () {
         RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
@@ -78,9 +82,6 @@ function start() {
     loops.everyInterval(250, function () {
         RainbowSparkleUnicorn.comment("This loop controls the volume")
         volumeControl();
-
-        //LED toggle takes two milliseconds - just helps me!
-        led.toggle(0, 0);
     })
 
     basic.showIcon(IconNames.Happy)

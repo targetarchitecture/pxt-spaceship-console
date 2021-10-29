@@ -1,7 +1,7 @@
 // Add your code here
 
 const horizonLevelAngle = 110;
-const horizonServo = RainbowSparkleUnicorn.Movement.Pin.P8;
+const horizonServo = RainbowSparkleUnicorn.Movement.Pins.P8;
 let horizonTiming = 0;
 
 function artificialHorizon() {
