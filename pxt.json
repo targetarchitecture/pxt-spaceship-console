@@ -6,7 +6,7 @@
         "microphone": "*",
         "neopixel": "github:microsoft/pxt-neopixel#v0.7.3",
         "ws2812b": "github:microsoft/pxt-ws2812b#v0.1.1",
-        "Rainbow Sparkle Unicorn": "github:targetarchitecture/pxt-rainbow-sparkle-unicorn#v2.0.21"
+        "Rainbow Sparkle Unicorn": "github:targetarchitecture/pxt-rainbow-sparkle-unicorn#v3.0.1"
     },
     "files": [
         "main.blocks",
@@ -25,7 +25,7 @@
     ],
     "testFiles": [],
     "targetVersions": {
-        "target": "4.0.11",
+        "target": "4.0.16",
         "targetId": "microbit"
     },
     "supportedTargets": [
