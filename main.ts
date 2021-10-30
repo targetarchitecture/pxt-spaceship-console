@@ -36,6 +36,10 @@ function start() {
     RainbowSparkleUnicorn.comment("Opening sequence sound")
     RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(1, 2))
     basic.showNumber(5)
+
+    //get the starting switch states
+    RainbowSparkleUnicorn.Switch.RequestSwitchStates();
+
     basic.forever(function () {
         RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
 
@@ -54,18 +58,22 @@ function start() {
     RainbowSparkleUnicorn.Light.turnOn(RainbowSparkleUnicorn.Light.Pins.P0)
     basic.showIcon(IconNames.Surprised)
     consoleState = "Normal"
+
     loops.everyInterval(1000, function () {
         RainbowSparkleUnicorn.comment("This controls the pressure gauge")
         pressureGauge();
     })
-    loops.everyInterval(200, function () {
+
+    loops.everyInterval(500, function () {
         RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
         sortOutFuelLights();
     })
+
     loops.everyInterval(250, function () {
         RainbowSparkleUnicorn.comment("This loop controls the volume")
         volumeControl();
     })
+    
     basic.showIcon(IconNames.Happy)
 }
 let consoleState = "Starting"
