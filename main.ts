@@ -1,31 +1,31 @@
-let consoleState = "Starting"
 
-input.onButtonPressed(Button.AB, function () {
-    serial.redirectToUSB();
-    basic.showIcon(IconNames.Yes)
-})
+//problems are that the volume and the spinner speed are using the analog pins...
 
 function start() {
-
-    RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }");
-
-    basic.showNumber(0);
-
-    RainbowSparkleUnicorn.comment("Back to UART");
-    RainbowSparkleUnicorn.start();
-
-    RainbowSparkleUnicorn.Light.turnAllOn();
-
-    basic.showNumber(1);
-
-    RainbowSparkleUnicorn.Sound.stop();
+    RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }")
+    basic.showNumber(0)
+    RainbowSparkleUnicorn.comment("Back to UART")
+    RainbowSparkleUnicorn.start(
+    );
+    RainbowSparkleUnicorn.Light.turnAllOn()
+    basic.showNumber(1)
+    RainbowSparkleUnicorn.Sound.stop()
     volumeControl();
-
     basic.showNumber(2)
-
-    RainbowSparkleUnicorn.Light.turnAllOff();
-
+    RainbowSparkleUnicorn.Light.turnAllOff()
     basic.showNumber(3)
+
+    if (strip == null) {
+
+        RainbowSparkleUnicorn.comment("Setup starting rainbow")
+        strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
+        alertStripRight = strip.range(0, 6)
+        alertStripLeft = strip.range(12, 6)
+        strip.setBrightness(255)
+
+        alertStripRight.showRainbow();
+        alertStripLeft.showRainbow();
+    }
 
     basic.forever(function () {
         RainbowSparkleUnicorn.comment("This loop controls the circular lights")
@@ -33,13 +33,9 @@ function start() {
     })
 
     basic.showNumber(4)
-
     RainbowSparkleUnicorn.comment("Opening sequence sound")
     RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(1, 2))
-
     basic.showNumber(5)
-
-    //set artificial horizon
     basic.forever(function () {
         RainbowSparkleUnicorn.comment("This loop controls the artificial horizon")
 
@@ -53,39 +49,24 @@ function start() {
             basic.pause(2500)
         }
     })
-
     basic.showNumber(6)
-
     RainbowSparkleUnicorn.comment("This is the big red button")
     RainbowSparkleUnicorn.Light.turnOn(RainbowSparkleUnicorn.Light.Pins.P0)
-
     basic.showIcon(IconNames.Surprised)
-
     consoleState = "Normal"
-
-    //main code loops
     loops.everyInterval(1000, function () {
         RainbowSparkleUnicorn.comment("This controls the pressure gauge")
         pressureGauge();
     })
-
-    // loops.everyInterval(2000, function () {
-    //     RainbowSparkleUnicorn.comment("This loop controls the sounds")
-    //     soundControl();
-    // })
-
     loops.everyInterval(200, function () {
         RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
         sortOutFuelLights();
     })
-
     loops.everyInterval(250, function () {
         RainbowSparkleUnicorn.comment("This loop controls the volume")
         volumeControl();
     })
-
     basic.showIcon(IconNames.Happy)
 }
-
-
-start();
+let consoleState = "Starting"
+start()

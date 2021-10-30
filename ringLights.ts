@@ -1,30 +1,20 @@
 
-let circularLightLoopPauseMs = 1000
+//let circularLightLoopPauseMs = 1000
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
 
 function ringLights() {
 
-    if (strip == null) {
-
-        RainbowSparkleUnicorn.comment("Setup starting rainbow")
-        strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
-        alertStripRight = strip.range(0, 6)
-        alertStripLeft = strip.range(12, 6)
-        strip.setBrightness(255)
-
-        alertStripRight.showRainbow();
-        alertStripLeft.showRainbow();
-    }
-
     alertStripLeft.rotate(1);
     alertStripRight.rotate(1);
     strip.show();
 
-    let shields = pins.analogReadPin(AnalogPin.P2);
+    //let shields = pins.analogReadPin(AnalogPin.P2);
 
-    basic.pause(shields);
+    //basic.pause(shields);
+
+    basic.pause(500);
 }
 
 function setColour(rgb: number) {
