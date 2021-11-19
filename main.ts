@@ -3,17 +3,16 @@
 
 function start() {
     RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }")
-    basic.showNumber(0)
+    basic.showNumber(0);
     RainbowSparkleUnicorn.comment("Back to UART")
-    RainbowSparkleUnicorn.start(
-    );
-    RainbowSparkleUnicorn.Light.turnAllOn()
-    basic.showNumber(1)
-    RainbowSparkleUnicorn.Sound.stop()
+    RainbowSparkleUnicorn.start();
+    RainbowSparkleUnicorn.Light.turnAllOn();
+    basic.showNumber(1);
+    RainbowSparkleUnicorn.Sound.stop();
     volumeControl();
-    basic.showNumber(2)
-    RainbowSparkleUnicorn.Light.turnAllOff()
-    basic.showNumber(3)
+    basic.showNumber(2);
+    RainbowSparkleUnicorn.Light.turnAllOff();
+    basic.showNumber(3);
 
     if (strip == null) {
 

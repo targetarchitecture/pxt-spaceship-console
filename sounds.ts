@@ -2,7 +2,7 @@
 //     let playingSound = RainbowSparkleUnicorn.Sound.playingSound();
 // }
 
-RainbowSparkleUnicorn.Sound.onBusyChange(function (busy) {
+RainbowSparkleUnicorn.Sound.onStopStart(function (busy) {
 
     if (busy == false) {
         //basic.pause(500);
