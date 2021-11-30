@@ -20,8 +20,7 @@
         "sounds.ts",
         "buttons.ts",
         "soundtrack.md",
-        "fuelLights.ts",
-        "buttons.md"
+        "fuelLights.ts"
     ],
     "testFiles": [],
     "targetVersions": {

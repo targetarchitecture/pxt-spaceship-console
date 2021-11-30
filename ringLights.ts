@@ -1,5 +1,4 @@
 
-//let circularLightLoopPauseMs = 1000
 let alertStripLeft: neopixel.Strip = null
 let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
@@ -13,8 +12,6 @@ function ringLights() {
     let shields = pins.analogReadPin(AnalogPin.P2);
 
     basic.pause(shields);
-
-    //basic.pause(500);
 }
 
 function setColour(rgb: number) {

@@ -1,8 +1,10 @@
 
+
+
 function sortOutFuelLights() {
 
-    let LeftBtn = RainbowSparkleUnicorn.Switch.getSwitchState(8);
-    let RightBtn = RainbowSparkleUnicorn.Switch.getSwitchState(14);
+    let LeftBtn = RainbowSparkleUnicorn.Switch.getSwitchState(btnFuelLeft);
+    let RightBtn = RainbowSparkleUnicorn.Switch.getSwitchState(btnFuelRight);
 
     if (LeftBtn == "L") {
         RainbowSparkleUnicorn.Light.turnOn(RainbowSparkleUnicorn.Light.Pins.P13)
@@ -19,4 +21,3 @@ function sortOutFuelLights() {
         RainbowSparkleUnicorn.Light.turnOff(RainbowSparkleUnicorn.Light.Pins.P14)
     }
 }
-
