@@ -82,25 +82,21 @@ RainbowSparkleUnicorn.Switch.onPressed(btnWarp, function () {
     RainbowSparkleUnicorn.Sound.playTrack(21)
 })
 
+RainbowSparkleUnicorn.Switch.onPressed(btnFuelLeft, function () {
+    sortOutFuelLights();
+})
 
-function dealWithButtonPress(pin: number) {
+RainbowSparkleUnicorn.Switch.onPressed(btnFuelRight, function () {
+    sortOutFuelLights();
+})
+
+RainbowSparkleUnicorn.Switch.onReleased(btnFuelLeft, function () {
+    sortOutFuelLights();
+})
+
+RainbowSparkleUnicorn.Switch.onReleased(btnFuelRight, function () {
+    sortOutFuelLights();
+})
 
 
-
-    // else if (pin == 9) {
-    //     sortOutFuelLights();
-    // }
-
-    // else if (pin == 14) {
-    //     sortOutFuelLights();
-    // }
-    // else if (pin == 15) {
-    //     RainbowSparkleUnicorn.Sound.playTrack(21)
-    //     setColour(neopixel.colors(NeoPixelColors.Blue));
-    // }
-    // else {
-    //     //serial.writeLine("missing switch pin:" + pin);
-    // }
-
-}
 

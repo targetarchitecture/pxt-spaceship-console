@@ -2,7 +2,8 @@ input.onButtonPressed(Button.AB, function () {
     serial.redirectToUSB()
     basic.showIcon(IconNames.Yes)
 })
-function start () {
+
+function start() {
     RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }")
     basic.showNumber(0)
     RainbowSparkleUnicorn.comment("Back to UART")
@@ -11,14 +12,14 @@ function start () {
     basic.showNumber(1)
     RainbowSparkleUnicorn.Sound.stop()
     volumeControl();
-basic.showNumber(2)
+    basic.showNumber(2)
     RainbowSparkleUnicorn.Light.turnAllOff()
     basic.showNumber(3)
     basic.forever(function () {
         RainbowSparkleUnicorn.comment("This loop controls the circular lights")
         ringLights();
     })
-basic.showNumber(4)
+    basic.showNumber(4)
     RainbowSparkleUnicorn.comment("Opening sequence sound")
     RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(1, 2))
     basic.showNumber(5)
@@ -35,24 +36,32 @@ basic.showNumber(4)
             basic.pause(2500)
         }
     })
-basic.showNumber(6)
+    basic.showNumber(6)
     RainbowSparkleUnicorn.comment("This is the big red button")
     RainbowSparkleUnicorn.Light.turnOn(RainbowSparkleUnicorn.Light.Pins.P0)
     basic.showIcon(IconNames.Surprised)
     consoleState = "Normal"
+    
     loops.everyInterval(1000, function () {
         RainbowSparkleUnicorn.comment("This controls the pressure gauge")
         pressureGauge();
     })
-loops.everyInterval(200, function () {
-        RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
-        sortOutFuelLights();
-    })
-loops.everyInterval(250, function () {
+
+    loops.everyInterval(250, function () {
         RainbowSparkleUnicorn.comment("This loop controls the volume")
         volumeControl();
     })
-basic.showIcon(IconNames.Happy)
+
+    RainbowSparkleUnicorn.Switch.RequestSwitchStates();
+    sortOutFuelLights();
+
+    // loops.everyInterval(200, function () {
+    //     RainbowSparkleUnicorn.comment("This loop controls the fuel gauge")
+    //     sortOutFuelLights();
+    // })
+
+
+    basic.showIcon(IconNames.Happy)
 }
 let consoleState = ""
 consoleState = "Starting"
