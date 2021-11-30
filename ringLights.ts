@@ -10,11 +10,11 @@ function ringLights() {
     alertStripRight.rotate(1);
     strip.show();
 
-    //let shields = pins.analogReadPin(AnalogPin.P2);
+    let shields = pins.analogReadPin(AnalogPin.P2);
 
-    //basic.pause(shields);
+    basic.pause(shields);
 
-    basic.pause(500);
+    //basic.pause(500);
 }
 
 function setColour(rgb: number) {

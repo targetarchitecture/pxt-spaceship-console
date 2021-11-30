@@ -17,7 +17,7 @@ function start() {
     if (strip == null) {
 
         RainbowSparkleUnicorn.comment("Setup starting rainbow")
-        strip = neopixel.create(DigitalPin.P0, 24, NeoPixelMode.RGB)
+        strip = neopixel.create(DigitalPin.P1, 24, NeoPixelMode.RGB)
         alertStripRight = strip.range(0, 6)
         alertStripLeft = strip.range(12, 6)
         strip.setBrightness(255)
