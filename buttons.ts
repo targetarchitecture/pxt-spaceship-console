@@ -8,8 +8,8 @@ const btnBottomLatching = RainbowSparkleUnicorn.Switch.Pins.P8;
 const btnRedAlert = RainbowSparkleUnicorn.Switch.Pins.P1;
 const btnWarp = RainbowSparkleUnicorn.Switch.Pins.P0;
 const btnImpulse = RainbowSparkleUnicorn.Switch.Pins.P3;
- const btnFuelLeft = RainbowSparkleUnicorn.Switch.Pins.P14;
- const btnFuelRight = RainbowSparkleUnicorn.Switch.Pins.P13;
+const btnFuelLeft = RainbowSparkleUnicorn.Switch.Pins.P14;
+const btnFuelRight = RainbowSparkleUnicorn.Switch.Pins.P13;
 const btnActionRed = RainbowSparkleUnicorn.Switch.Pins.P9;
 const btnActionBlue = RainbowSparkleUnicorn.Switch.Pins.P11;
 const btnActionGreen = RainbowSparkleUnicorn.Switch.Pins.P10;
@@ -71,32 +71,28 @@ RainbowSparkleUnicorn.Switch.onPressed(btnActionBlue, function () {
 
 RainbowSparkleUnicorn.Switch.onPressed(btnBottomLatching, function () {
     RainbowSparkleUnicorn.Sound.playTrack(21)
-    setColour(neopixel.colors(NeoPixelColors.Blue));
-    consoleState = "Normal";
+    control.inBackground(function() {
+        setColour(neopixel.colors(NeoPixelColors.Blue));
+        basic.pause(1000);
+        alertStripLeft.showRainbow()
+        alertStripRight.showRainbow()
+        consoleState = "Normal";
+    })  
 })
 
 RainbowSparkleUnicorn.Switch.onPressed(btnWarp, function () {
     RainbowSparkleUnicorn.comment("Red Spinner")
     alertStripLeft.showRainbow()
     alertStripRight.showRainbow()
-    RainbowSparkleUnicorn.Sound.playTrack(21)
-})
-
-RainbowSparkleUnicorn.Switch.onPressed(btnFuelLeft, function () {
-    sortOutFuelLights();
-})
-
-RainbowSparkleUnicorn.Switch.onPressed(btnFuelRight, function () {
-    sortOutFuelLights();
-})
-
-RainbowSparkleUnicorn.Switch.onReleased(btnFuelLeft, function () {
-    sortOutFuelLights();
+    RainbowSparkleUnicorn.Sound.playTrack(10)
 })
 
 RainbowSparkleUnicorn.Switch.onReleased(btnFuelRight, function () {
-    sortOutFuelLights();
+    RainbowSparkleUnicorn.Light.turnOff(RainbowSparkleUnicorn.Light.Pins.P14);
+    RainbowSparkleUnicorn.Light.blink(RainbowSparkleUnicorn.Light.Pins.P13, 1000, 500)
 })
 
-
-
+RainbowSparkleUnicorn.Switch.onReleased(btnFuelLeft, function () {
+    RainbowSparkleUnicorn.Light.turnOff(RainbowSparkleUnicorn.Light.Pins.P13);
+    RainbowSparkleUnicorn.Light.blink(RainbowSparkleUnicorn.Light.Pins.P14, 1000, 500)
+})
