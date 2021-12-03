@@ -1,10 +1,10 @@
-
-
-
-
 function start() {
-    const iconShowTime = 50;
-    let countdown = 9;
+    consoleState = "Starting"
+    iconShowTime = 50
+    countdown = 10
+    RainbowSparkleUnicorn.comment("Start ring lights")
+    basic.showNumber(countdown--, iconShowTime)
+    initRingLights();
     RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }")
     basic.showNumber(countdown--, iconShowTime)
     RainbowSparkleUnicorn.comment("Back to UART")
@@ -16,18 +16,11 @@ function start() {
     basic.showNumber(countdown--, iconShowTime)
     RainbowSparkleUnicorn.Light.turnAllOff()
     basic.showNumber(countdown--, iconShowTime)
-    if (strip == null) {
-        RainbowSparkleUnicorn.comment("Setup starting rainbow")
-        strip = neopixel.create(DigitalPin.P1, 24, NeoPixelMode.RGB)
-        alertStripRight = strip.range(0, 6)
-        alertStripLeft = strip.range(12, 6)
-        strip.setBrightness(255)
-        alertStripRight.showRainbow(0, 0)
-        alertStripLeft.showRainbow(0, 0)
-    }
     basic.forever(function () {
         RainbowSparkleUnicorn.comment("This loop controls the circular lights")
-        ringLights();
+        if (consoleState.compare("Starting") != 0) {
+            ringLights();
+        }
     })
     basic.showNumber(countdown--, iconShowTime)
     RainbowSparkleUnicorn.comment("Opening sequence sound")
@@ -51,7 +44,6 @@ function start() {
     RainbowSparkleUnicorn.comment("This is the big red button")
     RainbowSparkleUnicorn.Light.turnOn(RainbowSparkleUnicorn.Light.Pins.P0)
     basic.showNumber(countdown--, iconShowTime)
-    consoleState = "Normal"
     loops.everyInterval(1000, function () {
         RainbowSparkleUnicorn.comment("This controls the pressure gauge")
         pressureGauge();
@@ -78,8 +70,9 @@ function start() {
         250
     )
     basic.showIcon(IconNames.SmallSquare, iconShowTime)
+    consoleState = "Normal"
 }
-
+let countdown = 0
+let iconShowTime = 0
 let consoleState = ""
-consoleState = "Starting"
 start()
