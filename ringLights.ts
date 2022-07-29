@@ -4,16 +4,23 @@ let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
 
 function ringLights() {
+    while (true) {
+        if (consoleState.compare("Starting") != 0) {
 
-    initRingLights();
+            initRingLights();
 
-    alertStripLeft.rotate(1);
-    alertStripRight.rotate(1);
-    strip.show();
+            alertStripLeft.rotate(1);
+            alertStripRight.rotate(1);
+            strip.show();
 
-    let shields = pins.analogReadPin(AnalogPin.P2);
+            let shields = pins.analogReadPin(AnalogPin.P2);
 
-    basic.pause(shields);
+            basic.pause(shields);
+
+        } else {
+            basic.pause(500);
+        }
+    }
 }
 
 function setColour(rgb: number) {
@@ -31,7 +38,7 @@ function setColour(rgb: number) {
 function initRingLights() {
 
     if (strip == null) {
-        RainbowSparkleUnicorn.comment("Setup starting rainbow")
+        //RainbowSparkleUnicorn.comment("Setup starting rainbow")
         strip = neopixel.create(DigitalPin.P1, 24, NeoPixelMode.RGB)
         alertStripRight = strip.range(0, 6)
         alertStripLeft = strip.range(12, 6)
