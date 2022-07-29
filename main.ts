@@ -39,6 +39,10 @@ function start() {
     //     artificialHorizon();
     // })
 
+    control.inBackground(function () {
+        artificialHorizon();
+    })
+
     basic.showNumber(countdown--, iconShowTime)
     RainbowSparkleUnicorn.comment("This is the big red button")
     RainbowSparkleUnicorn.Light.turnOn(RainbowSparkleUnicorn.Light.Pins.P0)
