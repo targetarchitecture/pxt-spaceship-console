@@ -5,9 +5,10 @@ let strip: neopixel.Strip = null
 
 function ringLights() {
     while (true) {
-        if (consoleState != "Starting") {
 
-            initRingLights();
+        initRingLights();
+
+        if (consoleState != "Starting") {
 
             alertStripLeft.rotate(1);
             alertStripRight.rotate(1);
