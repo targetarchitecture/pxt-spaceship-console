@@ -2,25 +2,33 @@ function start() {
     consoleState = "Starting";
 
     RainbowSparkleUnicorn.start()
+
     RainbowSparkleUnicorn.Light.turnAllOn()
     RainbowSparkleUnicorn.Sound.stop()
-    volumeControl();
+
+    loops.everyInterval(250, function () {
+        volumeControl();
+    });
+
     RainbowSparkleUnicorn.Light.turnAllOff()
-    control.inBackground(function () {
+
+    basic.forever(function () {
         ringLights();
     })
+
     RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(1, 2))
     RainbowSparkleUnicorn.Switch.RequestSwitchStates();
-    control.inBackground(function () {
+
+    basic.forever(function () {
         artificialHorizon();
     })
+
     RainbowSparkleUnicorn.Light.turnOn(RainbowSparkleUnicorn.Light.Pins.P0)
-    control.inBackground(function () {
+
+    loops.everyInterval(1000, function () {
         pressureGauge();
-    })
-    control.inBackground(function () {
-        volumeControl();
-    })
+    });
+
     RainbowSparkleUnicorn.Light.breathe(
         RainbowSparkleUnicorn.Light.Pins.P13,
         1000,
