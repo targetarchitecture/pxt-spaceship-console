@@ -1,9 +1,9 @@
 
-RainbowSparkleUnicorn.Switch.onAnyPressed(function (pin) {
-    if (consoleState.compare("Starting") != 0) {
-        basic.showNumber(pin);
-    }
-})
+// RainbowSparkleUnicorn.Switch.onAnyPressed(function (pin) {
+//     if (consoleState.compare("Starting") != 0) {
+//         basic.showNumber(pin);
+//     }
+// })
 
 const btnBottomLatching = RainbowSparkleUnicorn.Switch.Pins.P8;
 const btnRedAlert = RainbowSparkleUnicorn.Switch.Pins.P1;
@@ -20,7 +20,7 @@ const joystickLeft = RainbowSparkleUnicorn.Switch.Pins.P6;
 RainbowSparkleUnicorn.Switch.onPressed(btnRedAlert, function () {
     //RainbowSparkleUnicorn.comment("Red Alert")
 
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState != "Starting") {
 
         //prevents them pressing the button repeatedly!
         if (RainbowSparkleUnicorn.Sound.track() != 99) {
@@ -34,7 +34,7 @@ RainbowSparkleUnicorn.Switch.onPressed(btnRedAlert, function () {
 RainbowSparkleUnicorn.Switch.onPressed(btnImpulse, function () {
     //RainbowSparkleUnicorn.comment("White Spinner")
 
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState != "Starting") {
 
         RainbowSparkleUnicorn.Sound.playTrack(22)
         setColour(neopixel.colors(NeoPixelColors.Purple));
@@ -43,7 +43,7 @@ RainbowSparkleUnicorn.Switch.onPressed(btnImpulse, function () {
 
 RainbowSparkleUnicorn.Switch.onPressed(joystickLeft, function () {
 
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState != "Starting") {
 
         RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(81, 85));
         setColour(neopixel.colors(NeoPixelColors.Indigo));
@@ -51,7 +51,7 @@ RainbowSparkleUnicorn.Switch.onPressed(joystickLeft, function () {
 })
 
 RainbowSparkleUnicorn.Switch.onPressed(joystickRight, function () {
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState != "Starting") {
         RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(81, 85));
         setColour(neopixel.colors(NeoPixelColors.Yellow));
     }
@@ -59,7 +59,7 @@ RainbowSparkleUnicorn.Switch.onPressed(joystickRight, function () {
 
 RainbowSparkleUnicorn.Switch.onPressed(btnActionRed, function () {
 
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState != "Starting") {
 
         //RainbowSparkleUnicorn.comment("Red Button")
         RainbowSparkleUnicorn.Sound.playTrack(70)
@@ -70,7 +70,7 @@ RainbowSparkleUnicorn.Switch.onPressed(btnActionRed, function () {
 
 RainbowSparkleUnicorn.Switch.onPressed(btnActionGreen, function () {
 
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState != "Starting") {
 
         RainbowSparkleUnicorn.Sound.playTrack(20)
         setColour(neopixel.colors(NeoPixelColors.Green));
@@ -80,7 +80,7 @@ RainbowSparkleUnicorn.Switch.onPressed(btnActionGreen, function () {
 
 RainbowSparkleUnicorn.Switch.onPressed(btnActionBlue, function () {
 
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState != "Starting") {
 
         RainbowSparkleUnicorn.Sound.playTrack(23)
         setColour(neopixel.colors(NeoPixelColors.Blue));
@@ -90,7 +90,7 @@ RainbowSparkleUnicorn.Switch.onPressed(btnActionBlue, function () {
 
 RainbowSparkleUnicorn.Switch.onPressed(btnBottomLatching, function () {
 
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState !="Starting") {
 
         RainbowSparkleUnicorn.Sound.playTrack(21)
         control.inBackground(function () {
@@ -105,7 +105,7 @@ RainbowSparkleUnicorn.Switch.onPressed(btnBottomLatching, function () {
 
 RainbowSparkleUnicorn.Switch.onPressed(btnWarp, function () {
 
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState !="Starting") {
 
         //RainbowSparkleUnicorn.comment("Red Spinner")
         alertStripLeft.showRainbow()
@@ -115,14 +115,14 @@ RainbowSparkleUnicorn.Switch.onPressed(btnWarp, function () {
 })
 
 RainbowSparkleUnicorn.Switch.onReleased(btnFuelRight, function () {
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState != "Starting") {
         RainbowSparkleUnicorn.Light.turnOff(RainbowSparkleUnicorn.Light.Pins.P14);
         RainbowSparkleUnicorn.Light.blink(RainbowSparkleUnicorn.Light.Pins.P13, 1000, 500)
     }
 })
 
 RainbowSparkleUnicorn.Switch.onReleased(btnFuelLeft, function () {
-    if (consoleState.compare("Starting") != 0) {
+    if (consoleState !="Starting") {
         RainbowSparkleUnicorn.Light.turnOff(RainbowSparkleUnicorn.Light.Pins.P13);
         RainbowSparkleUnicorn.Light.blink(RainbowSparkleUnicorn.Light.Pins.P14, 1000, 500)
     }

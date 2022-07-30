@@ -5,7 +5,7 @@ let strip: neopixel.Strip = null
 
 function ringLights() {
     while (true) {
-        if (consoleState.compare("Starting") != 0) {
+        if (consoleState != "Starting") {
 
             initRingLights();
 
