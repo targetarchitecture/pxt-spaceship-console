@@ -5,7 +5,8 @@
     "dependencies": {
         "core": "*",
         "Rainbow Sparkle Unicorn": "github:targetarchitecture/pxt-rainbow-sparkle-unicorn#v3.5.2",
-        "ws2812b": "github:microsoft/pxt-ws2812b#v0.1.2"
+        "ws2812b": "github:microsoft/pxt-ws2812b#v0.1.2",
+        "neopixel": "github:microsoft/pxt-neopixel#v0.7.3"
     },
     "files": [
         "main.blocks",
@@ -17,8 +18,7 @@
         "volume.ts",
         "sounds.ts",
         "buttons.ts",
-        "soundtrack.md",
-        "neopixel.ts"
+        "soundtrack.md"
     ],
     "testFiles": [],
     "targetVersions": {
