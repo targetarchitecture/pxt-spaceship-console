@@ -1,6 +1,7 @@
 function start() {
-    consoleState = "Starting"
-    //iconShowTime = 50
+    consoleState = "Starting";
+  // const iconShowTime = 50;
+    //let countdown = 20;
     initRingLights();
     // RainbowSparkleUnicorn.comment("ConsoleStates { Starting, Normal, VideoPlaying, YellowAlert, RedAlert }")
     // basic.showNumber(countdown--, iconShowTime)
@@ -10,13 +11,13 @@ function start() {
     // basic.showNumber(countdown--, iconShowTime)
     RainbowSparkleUnicorn.Sound.stop()
     volumeControl();
-    // basic.showNumber(countdown--, iconShowTime)
+     //basic.showNumber(countdown--, iconShowTime)
     RainbowSparkleUnicorn.Light.turnAllOff()
     control.inBackground(function () {
         ringLights();
     })
     // basic.showNumber(countdown--, iconShowTime)
-    RainbowSparkleUnicorn.comment("Opening sequence sound")
+    //RainbowSparkleUnicorn.comment("Opening sequence sound")
     RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(1, 2))
     RainbowSparkleUnicorn.Switch.RequestSwitchStates();
     control.inBackground(function () {
@@ -47,9 +48,9 @@ function start() {
         250,
         250
     )
-   // basic.showIcon(IconNames.SmallSquare, iconShowTime)
+    //basic.showIcon(IconNames.SmallSquare, iconShowTime)
     consoleState = "Normal"
 }
-//let iconShowTime = 0
+
 let consoleState = ""
 start()
