@@ -4,7 +4,7 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "Rainbow Sparkle Unicorn": "github:targetarchitecture/pxt-rainbow-sparkle-unicorn#v3.5.2",
+        "Rainbow Sparkle Unicorn": "github:targetarchitecture/pxt-rainbow-sparkle-unicorn#v3.5.4",
         "ws2812b": "github:microsoft/pxt-ws2812b#v0.1.2",
         "neopixel": "github:microsoft/pxt-neopixel#v0.7.3"
     },

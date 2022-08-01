@@ -90,7 +90,7 @@ RainbowSparkleUnicorn.Switch.onPressed(btnActionBlue, function () {
 
 RainbowSparkleUnicorn.Switch.onPressed(btnBottomLatching, function () {
 
-    if (consoleState !="Starting") {
+    if (consoleState != "Starting") {
 
         RainbowSparkleUnicorn.Sound.playTrack(21)
         control.inBackground(function () {
@@ -105,7 +105,7 @@ RainbowSparkleUnicorn.Switch.onPressed(btnBottomLatching, function () {
 
 RainbowSparkleUnicorn.Switch.onPressed(btnWarp, function () {
 
-    if (consoleState !="Starting") {
+    if (consoleState != "Starting") {
 
         //RainbowSparkleUnicorn.comment("Red Spinner")
         alertStripLeft.showRainbow()
@@ -122,7 +122,7 @@ RainbowSparkleUnicorn.Switch.onReleased(btnFuelRight, function () {
 })
 
 RainbowSparkleUnicorn.Switch.onReleased(btnFuelLeft, function () {
-    if (consoleState !="Starting") {
+    if (consoleState != "Starting") {
         RainbowSparkleUnicorn.Light.turnOff(RainbowSparkleUnicorn.Light.Pins.P13);
         RainbowSparkleUnicorn.Light.blink(RainbowSparkleUnicorn.Light.Pins.P14, 1000, 500)
     }

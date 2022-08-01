@@ -4,7 +4,6 @@ let alertStripRight: neopixel.Strip = null
 let strip: neopixel.Strip = null
 
 function ringLights() {
-    while (true) {
 
         initRingLights();
 
@@ -21,7 +20,6 @@ function ringLights() {
         } else {
             basic.pause(500);
         }
-    }
 }
 
 function setColour(rgb: number) {

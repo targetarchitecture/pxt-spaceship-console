@@ -10,7 +10,6 @@ function volumeControl() {
         volumeMapped = tempVol;
         RainbowSparkleUnicorn.Sound.setVolume(volumeMapped);
     }
-
     
    // basic.showNumber(volumeMapped)
 }
