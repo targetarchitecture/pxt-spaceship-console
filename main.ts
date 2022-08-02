@@ -7,14 +7,9 @@ function start() {
 
     volumeControl();
 
-    control.inBackground(() => {
-        while (true) {
-            volumeControl();
-            basic.pause(250)
-        }
-    })
 
     RainbowSparkleUnicorn.Light.turnAllOff()
+
     control.inBackground(() => {
         while (true) {
             ringLights();
@@ -23,6 +18,14 @@ function start() {
     })
 
     RainbowSparkleUnicorn.Sound.playTrack(Math.randomRange(1, 2))
+
+    control.inBackground(() => {
+        while (true) {
+            volumeControl();
+            basic.pause(250)
+        }
+    })
+
 
     RainbowSparkleUnicorn.Switch.RequestSwitchStates();
 
@@ -58,3 +61,4 @@ function start() {
 }
 let consoleState = ""
 start()
+
