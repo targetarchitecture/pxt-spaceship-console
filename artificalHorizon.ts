@@ -3,13 +3,13 @@ const horizonServo = RainbowSparkleUnicorn.Movement.Pins.P8;
 
 function artificialHorizon() {
         if (consoleState == "RedAlert") {
-            //RainbowSparkleUnicorn.comment("Timing in seconds")
+            RainbowSparkleUnicorn.comment("Timing in seconds")
             artificialHorizon_RedAlert();
         }
         else if (consoleState == "Starting") {
             artificialHorizon_Starting();
         } else {
-            //RainbowSparkleUnicorn.comment("Timing in seconds")
+            RainbowSparkleUnicorn.comment("Timing in seconds")
             artificialHorizon_Normal();
         }    
 }

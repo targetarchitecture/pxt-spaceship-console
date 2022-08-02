@@ -1,3 +1,5 @@
+Space console is using the SN9 board
+
 
 > Open this page at [https://targetarchitecture.github.io/pxt-spaceship-console/](https://targetarchitecture.github.io/pxt-spaceship-console/)
 
